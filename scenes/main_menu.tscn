@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://bnif2o14mgs3q"]
 
-[ext_resource type="Texture2D" uid="uid://baxi3ov4xvmsm" path="res://asset/drop.png" id="1_06t4h"]
-[ext_resource type="Script" uid="uid://dsggpmha6ly60" path="res://main_menu.gd" id="1_7vrkn"]
+[ext_resource type="Script" uid="uid://dsggpmha6ly60" path="res://main_menu.gd" id="1_ekxnf"]
+[ext_resource type="Texture2D" uid="uid://baxi3ov4xvmsm" path="res://asset/drop.png" id="2_bqqt6"]
 
 [sub_resource type="Gradient" id="Gradient_7vrkn"]
 offsets = PackedFloat32Array(0, 0.5, 0.9866667)
@@ -31,7 +31,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_7vrkn")
+script = ExtResource("1_ekxnf")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 1
@@ -83,7 +83,7 @@ text = "Quit
 position = Vector2(582, -14)
 emitting = false
 amount = 600
-texture = ExtResource("1_06t4h")
+texture = ExtResource("2_bqqt6")
 trail_lifetime = 0.01
 process_material = SubResource("ParticleProcessMaterial_rhts7")
 
