@@ -17,4 +17,6 @@
 - Ajout de la scène de jeu
 - Ajout du joueur et modification des paramètres de rendu
 - Ajout des animations du joueurs
+- Ajout du tileset et mapping des collisions
+- Ajout du terrain de base
 - Utiliser l'intelligence artificielle pour rechercher des fonctions qui sont utile, commme normalized pour les vecteurs.
