@@ -1,0 +1,232 @@
+[gd_scene load_steps=2 format=3 uid="uid://bmny8lcjl2b54"]
+
+[ext_resource type="Script" uid="uid://bqow3uwb30en3" path="res://option.gd" id="1_cd5v0"]
+
+[node name="Option" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_cd5v0")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="TabContainer" type="TabContainer" parent="MarginContainer"]
+layout_mode = 2
+current_tab = 0
+
+[node name="Display" type="TabBar" parent="MarginContainer/TabContainer"]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/TabContainer/Display"]
+layout_mode = 1
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -134.0
+offset_right = 134.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/TabContainer/Display/VBoxContainer"]
+layout_mode = 2
+
+[node name="WindowModeLabel" type="Label" parent="MarginContainer/TabContainer/Display/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Window Mode"
+
+[node name="WindowMode" type="OptionButton" parent="MarginContainer/TabContainer/Display/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 10
+selected = 0
+item_count = 3
+popup/item_0/text = "Window Mode"
+popup/item_0/id = 0
+popup/item_1/text = "Borderless"
+popup/item_1/id = 1
+popup/item_2/text = "Fullscreen"
+popup/item_2/id = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/TabContainer/Display/VBoxContainer"]
+layout_mode = 2
+
+[node name="UIScaleLabel" type="Label" parent="MarginContainer/TabContainer/Display/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "UI Scale"
+
+[node name="UIScale" type="HSlider" parent="MarginContainer/TabContainer/Display/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+min_value = 0.75
+max_value = 2.0
+step = 0.05
+value = 1.0
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="MarginContainer/TabContainer/Display/VBoxContainer"]
+layout_mode = 2
+
+[node name="VSyncLabel" type="Label" parent="MarginContainer/TabContainer/Display/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+text = "V-Sync"
+
+[node name="VSync" type="CheckBox" parent="MarginContainer/TabContainer/Display/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 10
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="MarginContainer/TabContainer/Display/VBoxContainer"]
+layout_mode = 2
+
+[node name="FPSCapLabel" type="Label" parent="MarginContainer/TabContainer/Display/VBoxContainer/HBoxContainer4"]
+layout_mode = 2
+text = "FPS Cap"
+
+[node name="FPSCap" type="OptionButton" parent="MarginContainer/TabContainer/Display/VBoxContainer/HBoxContainer4"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 10
+selected = 5
+item_count = 6
+popup/item_0/text = "30"
+popup/item_0/id = 0
+popup/item_1/text = "60"
+popup/item_1/id = 1
+popup/item_2/text = "120"
+popup/item_2/id = 2
+popup/item_3/text = "144"
+popup/item_3/id = 3
+popup/item_4/text = "165"
+popup/item_4/id = 4
+popup/item_5/text = "Unlimited"
+popup/item_5/id = 5
+
+[node name="Audio" type="TabBar" parent="MarginContainer/TabContainer"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/TabContainer/Audio"]
+layout_mode = 1
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -135.0
+offset_right = 135.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/TabContainer/Audio/VBoxContainer"]
+layout_mode = 2
+
+[node name="MaterLabel" type="Label" parent="MarginContainer/TabContainer/Audio/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Master"
+
+[node name="MasterAudio" type="HSlider" parent="MarginContainer/TabContainer/Audio/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 0.99
+step = 0.01
+value = 0.75
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/TabContainer/Audio/VBoxContainer"]
+layout_mode = 2
+
+[node name="MusicLabel" type="Label" parent="MarginContainer/TabContainer/Audio/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Music"
+
+[node name="MusicAudio" type="HSlider" parent="MarginContainer/TabContainer/Audio/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+value = 50.0
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="MarginContainer/TabContainer/Audio/VBoxContainer"]
+layout_mode = 2
+
+[node name="SFXLabel" type="Label" parent="MarginContainer/TabContainer/Audio/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+text = "SFX"
+
+[node name="SFXAudio" type="HSlider" parent="MarginContainer/TabContainer/Audio/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+value = 50.0
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="MarginContainer/TabContainer/Audio/VBoxContainer"]
+layout_mode = 2
+
+[node name="UILabel" type="Label" parent="MarginContainer/TabContainer/Audio/VBoxContainer/HBoxContainer4"]
+layout_mode = 2
+text = "SFX"
+
+[node name="UIAudio" type="HSlider" parent="MarginContainer/TabContainer/Audio/VBoxContainer/HBoxContainer4"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+value = 50.0
+
+[node name="Control" type="TabBar" parent="MarginContainer/TabContainer"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/TabContainer/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/TabContainer/Control/MarginContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/TabContainer/Control/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="UpLabel" type="Label" parent="MarginContainer/TabContainer/Control/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Move Up"
+
+[node name="Button" type="Button" parent="MarginContainer/TabContainer/Control/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+text = "W"
+
+[connection signal="item_selected" from="MarginContainer/TabContainer/Display/VBoxContainer/HBoxContainer/WindowMode" to="." method="_on_window_mode_item_selected"]
+[connection signal="drag_ended" from="MarginContainer/TabContainer/Display/VBoxContainer/HBoxContainer2/UIScale" to="." method="_on_ui_scale_drag_ended"]
+[connection signal="value_changed" from="MarginContainer/TabContainer/Display/VBoxContainer/HBoxContainer2/UIScale" to="." method="_on_ui_scale_value_changed"]
+[connection signal="toggled" from="MarginContainer/TabContainer/Display/VBoxContainer/HBoxContainer3/VSync" to="." method="_on_v_sync_toggled"]
+[connection signal="item_selected" from="MarginContainer/TabContainer/Display/VBoxContainer/HBoxContainer4/FPSCap" to="." method="_on_fps_cap_item_selected"]
+[connection signal="value_changed" from="MarginContainer/TabContainer/Audio/VBoxContainer/HBoxContainer/MasterAudio" to="." method="_on_master_audio_value_changed"]
+[connection signal="value_changed" from="MarginContainer/TabContainer/Audio/VBoxContainer/HBoxContainer2/MusicAudio" to="." method="_on_music_audio_value_changed"]
+[connection signal="value_changed" from="MarginContainer/TabContainer/Audio/VBoxContainer/HBoxContainer3/SFXAudio" to="." method="_on_sfx_audio_value_changed"]
+[connection signal="value_changed" from="MarginContainer/TabContainer/Audio/VBoxContainer/HBoxContainer4/UIAudio" to="." method="_on_ui_audio_value_changed"]
