@@ -1,5 +1,6 @@
 extends Control
 
+const GAME_SCENE: PackedScene = preload("uid://b8q4k3g2kge6t")
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -12,7 +13,7 @@ func _process(delta: float) -> void:
 
 
 func _on_play_pressed() -> void:
-	pass # Replace with function body.
+	get_tree().change_scene_to_packed(GAME_SCENE)
 
 
 func _on_option_pressed() -> void:
