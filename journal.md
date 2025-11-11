@@ -11,3 +11,10 @@
 - Creer le menu option
 - Demender a GPT comment changer les paramettre de l'application il ma donner de morseau de code et des etape a suivre
 - L'IA a globalement ete efficace mais elle a fais quelle que erreur pour le chemin des options
+
+### Mathys 11-11-2025
+- Modifier le menu option pour que le bouton Play fonctionne
+- Ajout de la scène de jeu
+- Ajout du joueur et modification des paramètres de rendu
+- Ajout des animations du joueurs
+- Utiliser l'intelligence artificielle pour rechercher des fonctions qui sont utile, commme normalized pour les vecteurs.
