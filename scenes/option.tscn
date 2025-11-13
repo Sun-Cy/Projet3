@@ -1,6 +1,13 @@
-[gd_scene load_steps=2 format=3 uid="uid://bmny8lcjl2b54"]
+[gd_scene load_steps=4 format=3 uid="uid://bmny8lcjl2b54"]
 
 [ext_resource type="Script" uid="uid://bqow3uwb30en3" path="res://option.gd" id="1_cd5v0"]
+
+[sub_resource type="Gradient" id="Gradient_qt2fl"]
+offsets = PackedFloat32Array(0, 0.5, 0.9932432)
+colors = PackedColorArray(0, 0, 0, 0.92156863, 0.1728327, 0.17283267, 0.17283267, 1, 0, 0, 0, 0.9411765)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_4u85i"]
+gradient = SubResource("Gradient_qt2fl")
 
 [node name="Option" type="Control"]
 layout_mode = 3
@@ -10,6 +17,15 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_cd5v0")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_4u85i")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -221,6 +237,23 @@ size_flags_horizontal = 6
 size_flags_vertical = 4
 text = "W"
 
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.8448542
+anchor_top = 0.8615926
+anchor_right = 0.9565972
+anchor_bottom = 0.91820985
+offset_left = -0.2720337
+offset_top = -0.31201172
+grow_horizontal = 0
+grow_vertical = 0
+metadata/_edit_use_anchors_ = true
+
+[node name="Back" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Back"
+
 [connection signal="item_selected" from="MarginContainer/TabContainer/Display/VBoxContainer/HBoxContainer/WindowMode" to="." method="_on_window_mode_item_selected"]
 [connection signal="drag_ended" from="MarginContainer/TabContainer/Display/VBoxContainer/HBoxContainer2/UIScale" to="." method="_on_ui_scale_drag_ended"]
 [connection signal="value_changed" from="MarginContainer/TabContainer/Display/VBoxContainer/HBoxContainer2/UIScale" to="." method="_on_ui_scale_value_changed"]
@@ -230,3 +263,4 @@ text = "W"
 [connection signal="value_changed" from="MarginContainer/TabContainer/Audio/VBoxContainer/HBoxContainer2/MusicAudio" to="." method="_on_music_audio_value_changed"]
 [connection signal="value_changed" from="MarginContainer/TabContainer/Audio/VBoxContainer/HBoxContainer3/SFXAudio" to="." method="_on_sfx_audio_value_changed"]
 [connection signal="value_changed" from="MarginContainer/TabContainer/Audio/VBoxContainer/HBoxContainer4/UIAudio" to="." method="_on_ui_audio_value_changed"]
+[connection signal="pressed" from="VBoxContainer/Back" to="." method="_on_back_pressed"]

@@ -172,3 +172,7 @@ func _on_ui_audio_value_changed(value: float) -> void:
 	_set_bus_volume("UI",value)
 	settings.audio.ui = value
 	save_settings()
+
+
+func _on_back_pressed() -> void:
+	self.visible = false

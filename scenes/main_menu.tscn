@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://bnif2o14mgs3q"]
+[gd_scene load_steps=8 format=3 uid="uid://bnif2o14mgs3q"]
 
 [ext_resource type="Script" uid="uid://dsggpmha6ly60" path="res://main_menu.gd" id="1_ekxnf"]
 [ext_resource type="Texture2D" uid="uid://baxi3ov4xvmsm" path="res://asset/drop.png" id="2_bqqt6"]
+[ext_resource type="PackedScene" uid="uid://bmny8lcjl2b54" path="res://scenes/option.tscn" id="3_bqqt6"]
 
 [sub_resource type="Gradient" id="Gradient_ekxnf"]
 colors = PackedColorArray(0, 0, 0, 1, 0.6542321, 0.6542321, 0.654232, 1)
@@ -85,6 +86,13 @@ amount = 600
 texture = ExtResource("2_bqqt6")
 trail_lifetime = 0.01
 process_material = SubResource("ParticleProcessMaterial_rhts7")
+
+[node name="Option" type="CanvasLayer" parent="."]
+layer = 0
+
+[node name="Option" parent="Option" instance=ExtResource("3_bqqt6")]
+unique_name_in_owner = true
+visible = false
 
 [connection signal="pressed" from="MarginContainer/CenterContainer/VBoxContainer/Play" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="MarginContainer/CenterContainer/VBoxContainer/Option" to="." method="_on_option_pressed"]

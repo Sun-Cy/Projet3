@@ -17,7 +17,7 @@ func _on_play_pressed() -> void:
 
 
 func _on_option_pressed() -> void:
-	get_tree().change_scene_to_packed(OPTION_SCENE)
+	%Option.visible = true
 
 
 func _on_quit_button_down() -> void:
