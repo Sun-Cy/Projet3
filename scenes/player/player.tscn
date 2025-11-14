@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://cfq0k4ct2jisj"]
+[gd_scene load_steps=22 format=3 uid="uid://cfq0k4ct2jisj"]
 
 [ext_resource type="Texture2D" uid="uid://rhoeui6h2arh" path="res://asset/Characters/Basic Charakter Spritesheet.png" id="1_8afob"]
 [ext_resource type="Script" uid="uid://bbsbi62h33ti5" path="res://scenes/player/player_controller.gd" id="1_dovo2"]
@@ -161,6 +161,14 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8afob"]
 size = Vector2(12, 16)
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_dovo2"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath("AnimatedSprite2D:animation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_dovo2")
 
@@ -170,3 +178,6 @@ animation = &"idle_up"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_8afob")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_dovo2")
