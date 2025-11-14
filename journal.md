@@ -20,3 +20,7 @@
 - Ajout du tileset et mapping des collisions
 - Ajout du terrain de base
 - Utiliser l'intelligence artificielle pour rechercher des fonctions qui sont utile, commme normalized pour les vecteurs.
+
+### Mathys 14-11-2025
+- Ajouter le multiplayer
+- Créer le script pour créer le serveur et le client avec l'IA
