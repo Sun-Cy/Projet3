@@ -7,6 +7,7 @@ var peer := ENetMultiplayerPeer.new()
 
 @onready var create_server: Button = %CreateServer
 @onready var create_client: Button = %CreateClient
+@onready var default_camera: Camera2D = $"../DefaultCamera"
 
 
 func _ready() -> void:
@@ -26,12 +27,14 @@ func _on_create_client_pressed() -> void:
 	join_server("localhost")
 	create_server.visible = false
 	create_client.visible = false
+	default_camera.set_enabled(false)
 
 
 func _on_create_server_pressed() -> void:
 	start_server()
 	create_server.visible = false
 	create_client.visible = false
+	default_camera.set_enabled(false)
 	
 
 func spawn_player(id: int):

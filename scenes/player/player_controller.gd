@@ -17,7 +17,7 @@ func _enter_tree() -> void:
 
 func _physics_process(delta: float) -> void:
 	if !is_multiplayer_authority(): return
-	var direction := Input.get_vector("left", "right", "up", "down").normalized()
+	var direction := Input.get_vector("left", "right", "up", "down").normalized().round()
 	
 	if direction:
 		velocity = direction * SPEED
