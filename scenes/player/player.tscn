@@ -181,3 +181,7 @@ shape = SubResource("RectangleShape2D_8afob")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_dovo2")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(4, 4)
+position_smoothing_enabled = true

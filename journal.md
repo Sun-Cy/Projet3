@@ -24,3 +24,8 @@
 ### Mathys 14-11-2025
 - Ajouter le multiplayer
 - Créer le script pour créer le serveur et le client avec l'IA
+
+### Mathys 15-11-2025
+- Finaliser le multiplayer avec une ip en peer to peer
+- Mettre les caméras par joueur
+- Demander à l'IA pour faire la caméra pas joueur

@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=4 uid="uid://b8q4k3g2kge6t"]
+[gd_scene load_steps=4 format=4 uid="uid://b8q4k3g2kge6t"]
 
 [ext_resource type="PackedScene" uid="uid://cfq0k4ct2jisj" path="res://scenes/player/player.tscn" id="1_uwrxv"]
 [ext_resource type="TileSet" uid="uid://vse2ttikn61q" path="res://asset/Tilesets/tileset.tres" id="1_yqjtg"]
+[ext_resource type="Script" uid="uid://cie63xt23f180" path="res://scripts/multiplayer_manager.gd" id="3_lnu2h"]
 
 [node name="Game" type="Node2D"]
 
@@ -13,11 +14,29 @@ tile_set = ExtResource("1_yqjtg")
 tile_map_data = PackedByteArray("AAACAAUAAAAIAAQAAAAQAAoAAAAIAAQAAAADAA4AAAAIAAQAAAAKAAYAAAAHAAQAAAAKAAcAAAAHAAUAAAAAAAsAAAAHAAQAAAAAAAwAAAAHAAUAAAAUAAQAAAAHAAQAAAAUAAUAAAAHAAUAAAADAAEAAAAHAAQAAAADAAIAAAAHAAUAAAALAAAAAAAHAAAAAAALAAEAAAAHAAEAAAALAAIAAAAHAAIAAAALAAMAAAAHAAMAAAAMAAAAAAAIAAAAAAAMAAEAAAAIAAEAAAAMAAIAAAAIAAIAAAAMAAMAAAAIAAMAAAANAAAAAAAJAAAAAAANAAEAAAAJAAEAAAANAAIAAAAJAAIAAAANAAMAAAAJAAMAAAACAAoAAAAHAAAAAAACAAsAAAAHAAEAAAACAAwAAAAHAAIAAAACAA0AAAAHAAMAAAADAAoAAAAIAAAAAAADAAsAAAAIAAEAAAADAAwAAAAIAAIAAAADAA0AAAAIAAMAAAAEAAoAAAAJAAAAAAAEAAsAAAAJAAEAAAAEAAwAAAAJAAIAAAAEAA0AAAAJAAMAAAASAAwAAAAHAAAAAAASAA0AAAAHAAEAAAASAA4AAAAHAAIAAAASAA8AAAAHAAMAAAATAAwAAAAIAAAAAAATAA0AAAAIAAEAAAATAA4AAAAIAAIAAAATAA8AAAAIAAMAAAAUAAwAAAAJAAAAAAAUAA0AAAAJAAEAAAAUAA4AAAAJAAIAAAAUAA8AAAAJAAMAAAD8/wEAAAAHAAAAAAD8/wIAAAAHAAEAAAD8/wMAAAAHAAIAAAD8/wQAAAAHAAMAAAD9/wEAAAAIAAAAAAD9/wIAAAAIAAEAAAD9/wMAAAAIAAIAAAD9/wQAAAAIAAMAAAD+/wEAAAAJAAAAAAD+/wIAAAAJAAEAAAD+/wMAAAAJAAIAAAD+/wQAAAAJAAMAAAALAAQAAAAFAAsAAAAMAAQAAAAGAAsAAAA=")
 tile_set = ExtResource("1_yqjtg")
 
-[node name="Player" parent="." instance=ExtResource("1_uwrxv")]
-position = Vector2(126, 134)
-
-[node name="Camera2D" type="Camera2D" parent="Player"]
-zoom = Vector2(4, 4)
-
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("uid://cfq0k4ct2jisj")
 spawn_path = NodePath(".")
+script = ExtResource("3_lnu2h")
+player_scene = ExtResource("1_uwrxv")
+
+[node name="CreateClient" type="Button" parent="."]
+unique_name_in_owner = true
+offset_left = -13.0
+offset_top = 72.0
+offset_right = 100.0
+offset_bottom = 103.0
+scale = Vector2(0.3709321, 0.37528515)
+text = "Join as Client"
+
+[node name="CreateServer" type="Button" parent="."]
+unique_name_in_owner = true
+offset_left = -13.0
+offset_top = 58.0
+offset_right = -5.0
+offset_bottom = 66.0
+scale = Vector2(0.3709321, 0.37528515)
+text = "Create Server"
+
+[connection signal="pressed" from="CreateClient" to="MultiplayerSpawner" method="_on_create_client_pressed"]
+[connection signal="pressed" from="CreateServer" to="MultiplayerSpawner" method="_on_create_server_pressed"]
