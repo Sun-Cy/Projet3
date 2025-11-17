@@ -25,6 +25,9 @@
 - Ajouter le multiplayer
 - Créer le script pour créer le serveur et le client avec l'IA
 
+### Cedrik 15-11-2025
+- Ajouter l'option back dans le menu option
+
 ### Mathys 15-11-2025
 - Finaliser le multiplayer avec une ip en peer to peer
 - Mettre les caméras par joueur

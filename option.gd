@@ -26,13 +26,22 @@ func _process(delta: float) -> void:
 func _set_window_mode(fullscreen: bool, borderless: bool) -> void:
 	var w := get_window()
 	if fullscreen:
+		# Real fullscreen — Godot will also set borderless=true internally.
 		w.mode = Window.MODE_FULLSCREEN
-	elif borderless:
-		w.mode = Window.MODE_WINDOWED
-		w.borderless = true
-	else:
-		w.mode = Window.MODE_WINDOWED
-		w.borderless = false
+		w.borderless = false  # (Optional) keep your non-FS states clean afterwards. 
+		return
+
+	# Windowed path
+	w.mode = Window.MODE_WINDOWED
+	w.borderless = borderless
+
+	if borderless:
+		# Make it *cover* the current screen: set size and move to (0,0) on that screen.
+		var screen := w.current_screen
+		var size  := DisplayServer.screen_get_size(screen)
+		w.size = size
+		w.position = DisplayServer.screen_get_position(screen)  # usually (0,0) for that monitor
+
 
 
 func _set_ui_scale(f: float) -> void:
@@ -40,19 +49,19 @@ func _set_ui_scale(f: float) -> void:
 
 
 func _set_vsync(enable: bool) -> void:
-	ProjectSettings.set_setting("display/window/vsync/vsync_mode", enable if "enabled" else "disabled")
-
+	# Change at runtime via DisplayServer, not ProjectSettings.
+	DisplayServer.window_set_vsync_mode(enable if DisplayServer.VSYNC_ENABLED else DisplayServer.VSYNC_DISABLED)
 
 
 func _set_fps_cap(cap: int) -> void:
-	ProjectSettings.set_setting("application/run/max_fps", cap)
-	settings.display.cap_fps = cap
+	Engine.max_fps = max(0, cap)   # 0 = uncapped
+	settings.display.fps_cap = Engine.max_fps
 
 
 func _set_bus_volume(bus_name: String, linear_0_1: float) -> void:
 	var idx := AudioServer.get_bus_index(bus_name)
-	var db := linear_to_db(clamp(linear_0_1,0.0,1.0))
-	AudioServer.set_bus_volume_db(idx, db)
+	if idx == -1: return
+	AudioServer.set_bus_volume_db(idx, linear_to_db(clamp(linear_0_1, 0.0, 1.0)))
 
 
 var _waiting_for_action: StringName = &""
@@ -104,7 +113,7 @@ func _on_window_mode_item_selected(index: int) -> void:
 			_set_window_mode(false, true)
 			settings.display.mode = "borderless"
 		WindowMode.FULLSCREEN:
-			_set_window_mode(true, true)
+			_set_window_mode(true, false)
 			settings.display.mode = "fullscreen"
 	
 	save_settings()

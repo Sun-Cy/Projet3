@@ -39,7 +39,7 @@ scale = Vector2(0.3709321, 0.37528515)
 text = "Create Server"
 
 [node name="DefaultCamera" type="Camera2D" parent="."]
-position = Vector2(125, 130)
+position = Vector2(90, 105)
 zoom = Vector2(4, 4)
 
 [connection signal="pressed" from="CreateClient" to="MultiplayerSpawner" method="_on_create_client_pressed"]
