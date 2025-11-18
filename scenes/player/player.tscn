@@ -158,8 +158,8 @@ animations = [{
 "speed": 4.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_8afob"]
-size = Vector2(12, 16)
+[sub_resource type="CircleShape2D" id="CircleShape2D_dovo2"]
+radius = 5.0
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_dovo2"]
 properties/0/path = NodePath(".:position")
@@ -177,7 +177,8 @@ sprite_frames = SubResource("SpriteFrames_lvxji")
 animation = &"idle_up"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_8afob")
+position = Vector2(0, 3)
+shape = SubResource("CircleShape2D_dovo2")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_dovo2")
