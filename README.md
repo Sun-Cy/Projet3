@@ -15,6 +15,10 @@ Nous allons créer un jeu 2D en utilisant le moteur de jeu open-source Godot
 
 [Lien](https://github.com/Sun-Cy/Projet3)
 
+# Journal de bord
+Voir le journal de bord pour savoir ce qu'on fait et l'utilisation de l'IA
+[Lien](https://github.com/Sun-Cy/Projet3/blob/main/journal.md)
+
 
 # Semaine 1
 Créer la base du jeu (menu, multijoueur, tileset) ✅
