@@ -1,7 +1,9 @@
-[gd_scene load_steps=22 format=3 uid="uid://cfq0k4ct2jisj"]
+[gd_scene load_steps=25 format=3 uid="uid://cfq0k4ct2jisj"]
 
 [ext_resource type="Texture2D" uid="uid://rhoeui6h2arh" path="res://asset/Characters/Basic Charakter Spritesheet.png" id="1_8afob"]
 [ext_resource type="Script" uid="uid://bbsbi62h33ti5" path="res://scenes/player/player_controller.gd" id="1_dovo2"]
+[ext_resource type="PackedScene" uid="uid://cg8m8kq03rh4b" path="res://scenes/component/health_component.tscn" id="3_lvxji"]
+[ext_resource type="PackedScene" uid="uid://c3t5f7ovvvto4" path="res://scenes/component/hitbox_component.tscn" id="4_p47bc"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dovo2"]
 atlas = ExtResource("1_8afob")
@@ -169,6 +171,9 @@ properties/1/path = NodePath("AnimatedSprite2D:animation")
 properties/1/spawn = true
 properties/1/replication_mode = 1
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_lvxji"]
+radius = 6.0
+
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_dovo2")
 
@@ -185,3 +190,13 @@ replication_config = SubResource("SceneReplicationConfig_dovo2")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(4, 4)
+
+[node name="HealthComponent" parent="." instance=ExtResource("3_lvxji")]
+
+[node name="HitboxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("4_p47bc")]
+health_component = NodePath("../HealthComponent")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
+visible = false
+position = Vector2(0, 2)
+shape = SubResource("CircleShape2D_lvxji")
