@@ -2,6 +2,7 @@ extends CharacterBody2D
 class_name Player
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var background: TileInteractor = %Background
 
 const SPEED = 150.0
 
@@ -15,8 +16,10 @@ func _enter_tree() -> void:
 	else:
 		$Camera2D.set_enabled(false)
 
+
 func _physics_process(delta: float) -> void:
 	if !is_multiplayer_authority(): return
+	
 	var direction := Input.get_vector("left", "right", "up", "down").normalized().round()
 	
 	if direction:
