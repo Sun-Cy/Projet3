@@ -25,7 +25,7 @@ tile_set = ExtResource("1_yqjtg")
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
 _spawnable_scenes = PackedStringArray("uid://cfq0k4ct2jisj")
-spawn_path = NodePath(".")
+spawn_path = NodePath("../Entities/Players")
 script = ExtResource("3_lnu2h")
 player_scene = ExtResource("1_uwrxv")
 
@@ -51,35 +51,38 @@ text = "Create Server"
 position = Vector2(90, 105)
 zoom = Vector2(4, 4)
 
-[node name="Tree" type="Node2D" parent="."]
-
-[node name="Tree" parent="Tree" instance=ExtResource("4_lbhrr")]
+[node name="Entities" type="Node2D" parent="."]
 y_sort_enabled = true
+position = Vector2(0, -1)
+
+[node name="Tree" type="Node2D" parent="Entities"]
+y_sort_enabled = true
+position = Vector2(-14, 43)
+
+[node name="Tree" parent="Entities/Tree" instance=ExtResource("4_lbhrr")]
 position = Vector2(117, -19)
 
-[node name="Tree2" parent="Tree" instance=ExtResource("4_lbhrr")]
-y_sort_enabled = true
+[node name="Tree2" parent="Entities/Tree" instance=ExtResource("4_lbhrr")]
 position = Vector2(92, 24)
 
-[node name="Tree3" parent="Tree" instance=ExtResource("4_lbhrr")]
-y_sort_enabled = true
+[node name="Tree3" parent="Entities/Tree" instance=ExtResource("4_lbhrr")]
 position = Vector2(137, 14)
 
-[node name="Tree4" parent="Tree" instance=ExtResource("4_lbhrr")]
-y_sort_enabled = true
+[node name="Tree4" parent="Entities/Tree" instance=ExtResource("4_lbhrr")]
 position = Vector2(167, -48)
 
-[node name="Tree5" parent="Tree" instance=ExtResource("4_lbhrr")]
-y_sort_enabled = true
+[node name="Tree5" parent="Entities/Tree" instance=ExtResource("4_lbhrr")]
 position = Vector2(78, -58)
 
-[node name="Tree6" parent="Tree" instance=ExtResource("4_lbhrr")]
-y_sort_enabled = true
+[node name="Tree6" parent="Entities/Tree" instance=ExtResource("4_lbhrr")]
 position = Vector2(38, 5)
 
-[node name="Tree7" parent="Tree" instance=ExtResource("4_lbhrr")]
-y_sort_enabled = true
+[node name="Tree7" parent="Entities/Tree" instance=ExtResource("4_lbhrr")]
 position = Vector2(46, -47)
+
+[node name="Players" type="Node2D" parent="Entities"]
+y_sort_enabled = true
+position = Vector2(0, -3)
 
 [connection signal="pressed" from="CreateClient" to="MultiplayerSpawner" method="_on_create_client_pressed"]
 [connection signal="pressed" from="CreateServer" to="MultiplayerSpawner" method="_on_create_server_pressed"]
