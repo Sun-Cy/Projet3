@@ -32,3 +32,9 @@
 - Finaliser le multiplayer avec une ip en peer to peer
 - Mettre les caméras par joueur
 - Demander à l'IA pour faire la caméra pas joueur
+
+### Mathys 20-11-2025
+- Ajouter le Y Sort avec ChatGPT
+
+### Mathys 23-11-2025
+- Ajouter l'overlay autour des tiles pour intéragir avec celles-ci
