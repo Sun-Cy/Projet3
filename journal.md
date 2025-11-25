@@ -36,8 +36,11 @@
 ### Mathys 20-11-2025
 - Ajouter le Y Sort avec ChatGPT
 
-## Cedrik 20-11-2025
+### Cedrik 20-11-2025
 - Refais la map et ajouter des falaises comme tileset pour la map
 
 ### Mathys 23-11-2025
 - Ajouter l'overlay autour des tiles pour intéragir avec celles-ci
+
+### Cedrik 25-11-2025
+- Ajouter la base pour des animations de dommage et mort sur une entite avec l'aide de GPT

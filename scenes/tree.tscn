@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://c07h3bt0sicdh"]
+[gd_scene load_steps=6 format=3 uid="uid://c07h3bt0sicdh"]
 
 [ext_resource type="Texture2D" uid="uid://c4f7usfak6pfi" path="res://asset/Objects/Basic_Grass_Biom_things.png" id="1_viusy"]
 [ext_resource type="PackedScene" uid="uid://cg8m8kq03rh4b" path="res://scenes/component/health_component.tscn" id="2_qd6xs"]
+[ext_resource type="PackedScene" uid="uid://c3t5f7ovvvto4" path="res://scenes/component/hitbox_component.tscn" id="3_qd6xs"]
 [ext_resource type="Script" uid="uid://2k4hiaasagsd" path="res://scenes/component/hitbox_component.gd" id="3_viusy"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_viusy"]
@@ -17,7 +18,14 @@ region_rect = Rect2(20, 1, 24, 32)
 
 [node name="HealthComponent" parent="." instance=ExtResource("2_qd6xs")]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="HitboxComponent" parent="." instance=ExtResource("3_qd6xs")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
+y_sort_enabled = true
+shape = SubResource("CircleShape2D_viusy")
+script = ExtResource("3_viusy")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
 y_sort_enabled = true
 shape = SubResource("CircleShape2D_viusy")
 script = ExtResource("3_viusy")
