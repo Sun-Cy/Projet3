@@ -1,0 +1,107 @@
+[gd_scene load_steps=9 format=3 uid="uid://c68wql8v35awg"]
+
+[ext_resource type="Script" uid="uid://drhw5e1vhfxlf" path="res://scenes/item/axe_item.gd" id="1_ypd7l"]
+[ext_resource type="Texture2D" uid="uid://bhv0bwexu26nb" path="res://asset/Objects/Basic_tools_and_meterials.png" id="2_5bq6i"]
+[ext_resource type="PackedScene" uid="uid://bcnck3ige8os7" path="res://scenes/component/AttackComponenet.tscn" id="3_mgcty"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mgcty"]
+atlas = ExtResource("2_5bq6i")
+region = Rect2(17, 0, 15, 17)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hfeba"]
+size = Vector2(42, 21)
+
+[sub_resource type="Animation" id="Animation_hfeba"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Axe:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Axe:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_mgcty"]
+resource_name = "swing"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Axe:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.39600003),
+"transitions": PackedFloat32Array(0.4829682, 2.828429, 0.4204484, 1, 2.21914),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(13.835, 0.92), Vector2(0, -5), Vector2(-13.835, 0.92), Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Axe:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.19800003, 0.296, 0.39600003),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.7470009198535732, -0.7452555906015785, -1.7400932642383464, 0.0]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AttackComponenet")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.2),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"attack_once"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_du5l3"]
+_data = {
+&"RESET": SubResource("Animation_hfeba"),
+&"swing": SubResource("Animation_mgcty")
+}
+
+[node name="AxeItem" type="Node2D" node_paths=PackedStringArray("anim_player", "attack_component")]
+position = Vector2(0, -12)
+scale = Vector2(0.7, 0.7)
+script = ExtResource("1_ypd7l")
+anim_player = NodePath("AnimationPlayer")
+attack_component = NodePath("AttackComponenet")
+
+[node name="Axe" type="Sprite2D" parent="."]
+texture = SubResource("AtlasTexture_mgcty")
+
+[node name="AttackComponenet" parent="." instance=ExtResource("3_mgcty")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackComponenet"]
+shape = SubResource("RectangleShape2D_hfeba")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_du5l3")
+}

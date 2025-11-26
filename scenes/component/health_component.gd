@@ -12,14 +12,15 @@ func _ready() -> void:
 	health_changed.emit(health, MAX_HEALTH)
 
 
-func damage(attack: Attack):
-	health = clampf(health - attack.attack_damage, 0, MAX_HEALTH)
+func damage(attack: Attack) -> void:
+	health = clampf(health - attack.attack_damage, 0.0, MAX_HEALTH)
 	health_changed.emit(health, MAX_HEALTH)
-	
+	print(health)
 	if health == 0.0:
 		#play dead animation
 		#drop loot
 		died.emit()
+		get_parent().queue_free()
 		return
 	
 	#play damage animation

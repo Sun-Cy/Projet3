@@ -1,5 +1,8 @@
 extends Node2D
 class_name HitboxComponent
 
-func damage(attack: Attack):
-	pass
+@export var health_component: HealthComponent
+
+func damage(attack: Attack) -> void:
+	if health_component:
+		health_component.damage(attack)

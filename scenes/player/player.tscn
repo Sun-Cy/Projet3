@@ -1,10 +1,9 @@
-[gd_scene load_steps=33 format=3 uid="uid://cfq0k4ct2jisj"]
+[gd_scene load_steps=32 format=3 uid="uid://cfq0k4ct2jisj"]
 
 [ext_resource type="Texture2D" uid="uid://rhoeui6h2arh" path="res://asset/Characters/Basic Charakter Spritesheet.png" id="1_8afob"]
 [ext_resource type="Script" uid="uid://bbsbi62h33ti5" path="res://scenes/player/player_controller.gd" id="1_dovo2"]
 [ext_resource type="Texture2D" uid="uid://bj6g3h0ji0354" path="res://asset/Characters/Basic Charakter Actions.png" id="2_p47bc"]
-[ext_resource type="PackedScene" uid="uid://cg8m8kq03rh4b" path="res://scenes/component/health_component.tscn" id="3_lvxji"]
-[ext_resource type="Script" uid="uid://2k4hiaasagsd" path="res://scenes/component/hitbox_component.gd" id="4_p47bc"]
+[ext_resource type="PackedScene" uid="uid://c68wql8v35awg" path="res://scenes/item/AxeItem.tscn" id="6_75vfm"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kvlxm"]
 atlas = ExtResource("2_p47bc")
@@ -251,9 +250,10 @@ properties/2/path = NodePath("AnimatedSprite2D:frame")
 properties/2/spawn = true
 properties/2/replication_mode = 1
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("current_item")]
 y_sort_enabled = true
 script = ExtResource("1_dovo2")
+current_item = NodePath("ItemPivot/AxeItem")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_lvxji")
@@ -263,7 +263,6 @@ offset = Vector2(0, -7.5)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_dovo2")
-script = ExtResource("4_p47bc")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_dovo2")
@@ -271,4 +270,7 @@ replication_config = SubResource("SceneReplicationConfig_dovo2")
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(4, 4)
 
-[node name="HealthComponent" parent="." instance=ExtResource("3_lvxji")]
+[node name="ItemPivot" type="Node2D" parent="."]
+position = Vector2(0, -7)
+
+[node name="AxeItem" parent="ItemPivot" instance=ExtResource("6_75vfm")]

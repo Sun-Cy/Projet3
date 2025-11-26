@@ -3,11 +3,13 @@ class_name Player
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var background: TileInteractor = %Background
+@onready var item_pivot: Node2D = $ItemPivot
 
-const SPEED = 150.0
+@export var SPEED: float = 150.0
 
 var current_direction = "down"
 var is_moving = false
+@export var current_item: HeldItem = null
 
 func _enter_tree() -> void:
 	set_multiplayer_authority(name.to_int())
@@ -39,6 +41,41 @@ func _physics_process(delta: float) -> void:
 
 	move_and_slide()
 
+
+func _process(delta: float) -> void:
+	if !is_multiplayer_authority():
+		return
+	
+	_update_item_aim()
+	
+	if Input.is_action_just_pressed("attack_primary"):   # LMB
+		if current_item:
+			current_item.use_primary()
+	
+	if Input.is_action_just_pressed("attack_secondary"): # RMB
+		if current_item:
+			current_item.use_secondary()
+
+
 func update_animation():
 	var animation_key = "moving" if is_moving else "idle"
 	animated_sprite.play(animation_key + "_" + current_direction);
+
+
+func _update_item_aim() -> void:
+	var mouse_pos: Vector2 = get_global_mouse_position()
+	item_pivot.look_at(mouse_pos)
+	item_pivot.rotation += PI/2
+
+
+func equip_item(item_scene: PackedScene) -> void:
+	if current_item:
+		current_item.on_unequipped()
+		current_item.queue_free()
+		current_item = null
+
+	var item: HeldItem = item_scene.instantiate() as HeldItem
+	$ItemPivot.add_child(item)
+	item.on_equipped()
+
+	current_item = item
