@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://c07h3bt0sicdh"]
+[gd_scene load_steps=9 format=3 uid="uid://c07h3bt0sicdh"]
 
 [ext_resource type="Texture2D" uid="uid://c4f7usfak6pfi" path="res://asset/Objects/Basic_Grass_Biom_things.png" id="1_viusy"]
 [ext_resource type="PackedScene" uid="uid://cg8m8kq03rh4b" path="res://scenes/component/health_component.tscn" id="2_qd6xs"]
@@ -6,6 +6,98 @@
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_viusy"]
 radius = 6.0
+
+[sub_resource type="Animation" id="Animation_viusy"]
+resource_name = "damage"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.033333335, 0.06666667),
+"transitions": PackedFloat32Array(9.8491535, 3.363585, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0.9, 0.9), Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.033333335, 0.06666667),
+"transitions": PackedFloat32Array(4.141062, 4.2870913, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(0.91296643, 0.36787868, 0.5400099, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_qd6xs"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_ake3r"]
+resource_name = "died"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 5.2780294),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0, 0)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ake3r"]
+_data = {
+&"RESET": SubResource("Animation_qd6xs"),
+&"damage": SubResource("Animation_viusy"),
+&"died": SubResource("Animation_ake3r")
+}
 
 [node name="Tree" type="StaticBody2D"]
 
@@ -15,7 +107,8 @@ offset = Vector2(0, -11.34)
 region_enabled = true
 region_rect = Rect2(20, 1, 24, 32)
 
-[node name="HealthComponent" parent="." instance=ExtResource("2_qd6xs")]
+[node name="HealthComponent" parent="." node_paths=PackedStringArray("animation") instance=ExtResource("2_qd6xs")]
+animation = NodePath("../AnimationPlayer")
 
 [node name="HitboxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("3_qd6xs")]
 health_component = NodePath("../HealthComponent")
@@ -27,3 +120,8 @@ shape = SubResource("CircleShape2D_viusy")
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
 y_sort_enabled = true
 shape = SubResource("CircleShape2D_viusy")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_ake3r")
+}

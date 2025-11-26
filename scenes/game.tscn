@@ -95,5 +95,7 @@ position = Vector2(46, -47)
 y_sort_enabled = true
 position = Vector2(0, -3)
 
+[node name="Item" type="Node2D" parent="Entities"]
+
 [connection signal="pressed" from="CreateClient" to="MultiplayerSpawner" method="_on_create_client_pressed"]
 [connection signal="pressed" from="CreateServer" to="MultiplayerSpawner" method="_on_create_server_pressed"]

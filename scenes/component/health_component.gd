@@ -2,6 +2,7 @@ extends Node2D
 class_name HealthComponent
 
 @export var MAX_HEALTH:float = 10.0
+@export var animation: AnimationPlayer
 var health: float
 
 signal health_changed(current: float, max: float)
@@ -15,13 +16,15 @@ func _ready() -> void:
 func damage(attack: Attack) -> void:
 	health = clampf(health - attack.attack_damage, 0.0, MAX_HEALTH)
 	health_changed.emit(health, MAX_HEALTH)
-	print(health)
+	
 	if health == 0.0:
-		#play dead animation
-		#drop loot
 		died.emit()
-		get_parent().queue_free()
+		if animation:
+			if animation.has_animation("died"):
+				animation.play("died")
 		return
 	
-	#play damage animation
+	if animation:
+		if animation.has_animation("damage"):
+			animation.play("damage")
 	

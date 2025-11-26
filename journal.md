@@ -44,3 +44,6 @@
 
 ### Cedrik 25-11-2025
 - Ajouter la base pour des animations de dommage et mort sur une entite avec l'aide de GPT
+
+### Cedrik 26-11-2025
+- Fini le code de DamageComponent et les animations pour les arbres
