@@ -73,9 +73,11 @@ func equip_item(item_scene: PackedScene) -> void:
 		current_item.on_unequipped()
 		current_item.queue_free()
 		current_item = null
-
+	
 	var item: HeldItem = item_scene.instantiate() as HeldItem
 	$ItemPivot.add_child(item)
+	
+	item.set_multiplayer_authority(get_multiplayer_authority())
+	
 	item.on_equipped()
-
 	current_item = item

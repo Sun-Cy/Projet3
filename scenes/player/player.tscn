@@ -249,9 +249,13 @@ properties/1/replication_mode = 1
 properties/2/path = NodePath("AnimatedSprite2D:frame")
 properties/2/spawn = true
 properties/2/replication_mode = 1
+properties/3/path = NodePath("ItemPivot:rotation")
+properties/3/spawn = true
+properties/3/replication_mode = 1
 
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("current_item")]
 y_sort_enabled = true
+collision_mask = 6
 script = ExtResource("1_dovo2")
 current_item = NodePath("ItemPivot/AxeItem")
 

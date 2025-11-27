@@ -19,7 +19,7 @@ func on_unequipped() -> void:
 func use_primary() -> void:
 	if not _can_attack:
 		return
-
+	
 	_can_attack = false
 	anim_player.play("swing")  # Animation will control hitbox timing
 

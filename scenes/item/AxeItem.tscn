@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://c68wql8v35awg"]
+[gd_scene load_steps=10 format=3 uid="uid://c68wql8v35awg"]
 
 [ext_resource type="Script" uid="uid://drhw5e1vhfxlf" path="res://scenes/item/axe_item.gd" id="1_ypd7l"]
 [ext_resource type="Texture2D" uid="uid://bhv0bwexu26nb" path="res://asset/Objects/Basic_tools_and_meterials.png" id="2_5bq6i"]
@@ -86,6 +86,14 @@ _data = {
 &"swing": SubResource("Animation_mgcty")
 }
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_mgcty"]
+properties/0/path = NodePath("Axe:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath("Axe:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+
 [node name="AxeItem" type="Node2D" node_paths=PackedStringArray("anim_player", "attack_component")]
 position = Vector2(0, -12)
 scale = Vector2(0.7, 0.7)
@@ -105,3 +113,6 @@ shape = SubResource("RectangleShape2D_hfeba")
 libraries = {
 &"": SubResource("AnimationLibrary_du5l3")
 }
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_mgcty")
