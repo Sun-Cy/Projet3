@@ -4,7 +4,7 @@ class_name TileInteractor
 @onready var highlight = Node2D.new()
 var current_player
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	highlight.queue_redraw()
 
 func _on_highlight_draw():

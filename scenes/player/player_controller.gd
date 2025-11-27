@@ -19,7 +19,7 @@ func _enter_tree() -> void:
 		$Camera2D.set_enabled(false)
 
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	if !is_multiplayer_authority(): return
 	
 	var direction := Input.get_vector("left", "right", "up", "down").normalized().round()
@@ -42,7 +42,7 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if !is_multiplayer_authority():
 		return
 	

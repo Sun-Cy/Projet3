@@ -19,7 +19,7 @@ func _ready() -> void:
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	pass
 
 
@@ -38,7 +38,7 @@ func _set_window_mode(fullscreen: bool, borderless: bool) -> void:
 	if borderless:
 		# Make it *cover* the current screen: set size and move to (0,0) on that screen.
 		var screen := w.current_screen
-		var size  := DisplayServer.screen_get_size(screen)
+		size = DisplayServer.screen_get_size(screen)
 		w.size = size
 		w.position = DisplayServer.screen_get_position(screen)  # usually (0,0) for that monitor
 
@@ -50,7 +50,7 @@ func _set_ui_scale(f: float) -> void:
 
 func _set_vsync(enable: bool) -> void:
 	# Change at runtime via DisplayServer, not ProjectSettings.
-	DisplayServer.window_set_vsync_mode(enable if DisplayServer.VSYNC_ENABLED else DisplayServer.VSYNC_DISABLED)
+	DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_ENABLED if enable else DisplayServer.VSYNC_DISABLED)
 
 
 func _set_fps_cap(cap: int) -> void:
