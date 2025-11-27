@@ -1,6 +1,5 @@
-[gd_scene load_steps=11 format=3 uid="uid://c07h3bt0sicdh"]
+[gd_scene load_steps=10 format=3 uid="uid://c07h3bt0sicdh"]
 
-[ext_resource type="Script" uid="uid://4dm8nldkitaq" path="res://scenes/tree.gd" id="1_qd6xs"]
 [ext_resource type="Texture2D" uid="uid://c4f7usfak6pfi" path="res://asset/Objects/Basic_Grass_Biom_things.png" id="1_viusy"]
 [ext_resource type="PackedScene" uid="uid://cg8m8kq03rh4b" path="res://scenes/component/health_component.tscn" id="2_qd6xs"]
 [ext_resource type="PackedScene" uid="uid://c3t5f7ovvvto4" path="res://scenes/component/hitbox_component.tscn" id="3_qd6xs"]
@@ -114,7 +113,6 @@ properties/2/replication_mode = 1
 [node name="Tree" type="StaticBody2D"]
 collision_layer = 2
 collision_mask = 0
-script = ExtResource("1_qd6xs")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_viusy")

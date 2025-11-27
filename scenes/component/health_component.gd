@@ -14,6 +14,8 @@ func _ready() -> void:
 		health = MAX_HEALTH
 		health_changed.emit(health, MAX_HEALTH)
 	# Non-authoritative copies will get `health` from MultiplayerSynchronizer.
+	if animation:
+		animation.animation_finished.connect(_on_anim_finished)
 
 
 func damage(attack: Attack) -> void:
@@ -44,6 +46,18 @@ func _apply_damage(damage_amount: float) -> void:
 		died.emit()
 		if animation and animation.has_animation("died"):
 			animation.play("died")
+		else:
+			destroy_for_everyone()
 	else:
 		if animation and animation.has_animation("damage"):
 			animation.play("damage")
+
+
+@rpc("any_peer", "call_local")
+func destroy_for_everyone() -> void:
+	queue_free()
+
+
+func _on_anim_finished(anim_name: StringName) -> void:
+	if anim_name == "died":
+		destroy_for_everyone()
