@@ -1,12 +1,16 @@
-[gd_scene load_steps=6 format=4 uid="uid://b8q4k3g2kge6t"]
+[gd_scene load_steps=8 format=4 uid="uid://b8q4k3g2kge6t"]
 
+[ext_resource type="Script" uid="uid://cj4pgmgmto4j0" path="res://scenes/game.gd" id="1_p57ef"]
 [ext_resource type="PackedScene" uid="uid://cfq0k4ct2jisj" path="res://scenes/player/player.tscn" id="1_uwrxv"]
 [ext_resource type="TileSet" uid="uid://vse2ttikn61q" path="res://asset/Tilesets/tileset.tres" id="1_yqjtg"]
 [ext_resource type="Script" uid="uid://g7ddpm2wto38" path="res://scenes/mouse.gd" id="2_iywne"]
 [ext_resource type="Script" uid="uid://cie63xt23f180" path="res://scripts/multiplayer_manager.gd" id="3_lnu2h"]
 [ext_resource type="PackedScene" uid="uid://c07h3bt0sicdh" path="res://scenes/tree.tscn" id="4_lbhrr"]
+[ext_resource type="Script" uid="uid://bj3k4pe6ufu1d" path="res://scenes/entities_sync.gd" id="5_iywne"]
 
 [node name="Game" type="Node2D"]
+script = ExtResource("1_p57ef")
+tree_scene = ExtResource("4_lbhrr")
 
 [node name="Tileset" type="Node2D" parent="."]
 
@@ -65,37 +69,14 @@ zoom = Vector2(4, 4)
 z_index = 50
 y_sort_enabled = true
 position = Vector2(0, -1)
-
-[node name="Tree" type="Node2D" parent="Entities"]
-y_sort_enabled = true
-position = Vector2(-14, 43)
-
-[node name="Tree" parent="Entities/Tree" instance=ExtResource("4_lbhrr")]
-position = Vector2(117, -19)
-
-[node name="Tree2" parent="Entities/Tree" instance=ExtResource("4_lbhrr")]
-position = Vector2(92, 24)
-
-[node name="Tree3" parent="Entities/Tree" instance=ExtResource("4_lbhrr")]
-position = Vector2(137, 14)
-
-[node name="Tree4" parent="Entities/Tree" instance=ExtResource("4_lbhrr")]
-position = Vector2(167, -48)
-
-[node name="Tree5" parent="Entities/Tree" instance=ExtResource("4_lbhrr")]
-position = Vector2(78, -58)
-
-[node name="Tree6" parent="Entities/Tree" instance=ExtResource("4_lbhrr")]
-position = Vector2(38, 5)
-
-[node name="Tree7" parent="Entities/Tree" instance=ExtResource("4_lbhrr")]
-position = Vector2(46, -47)
+script = ExtResource("5_iywne")
 
 [node name="Players" type="Node2D" parent="Entities"]
 y_sort_enabled = true
 position = Vector2(0, -3)
 
-[node name="Item" type="Node2D" parent="Entities"]
+[node name="Tree" parent="Entities" instance=ExtResource("4_lbhrr")]
+position = Vector2(162, 76)
 
 [connection signal="pressed" from="CreateClient" to="MultiplayerSpawner" method="_on_create_client_pressed"]
 [connection signal="pressed" from="CreateServer" to="MultiplayerSpawner" method="_on_create_server_pressed"]
