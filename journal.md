@@ -52,3 +52,4 @@
 ### Cedrik 28-11-2025
 - Finalement reperer le multiplayers pour vrai
 - ajouter un debug overlay avec F3
+- ajouter une crate pour tester le system de component
