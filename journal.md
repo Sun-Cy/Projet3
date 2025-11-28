@@ -48,3 +48,7 @@
 ### Cedrik 26-11-2025
 - Fini le code de DamageComponent et les animations pour les arbres
 - Faire marche le multiplayer pour la coupe d'arbre avec l'aide the chatGPT
+
+### Cedrik 28-11-2025
+- Finalement reperer le multiplayers pour vrai
+- ajouter un debug overlay avec F3

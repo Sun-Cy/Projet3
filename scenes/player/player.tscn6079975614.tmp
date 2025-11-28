@@ -254,7 +254,7 @@ properties/3/path = NodePath("ItemPivot:rotation")
 properties/3/spawn = true
 properties/3/replication_mode = 1
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("current_item") groups=["players"]]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("current_item")]
 y_sort_enabled = true
 collision_mask = 6
 script = ExtResource("1_dovo2")
@@ -280,7 +280,7 @@ position = Vector2(0, -7)
 
 [node name="AxeItem" parent="ItemPivot" instance=ExtResource("6_75vfm")]
 
-[node name="UI" type="CanvasLayer" parent="." node_paths=PackedStringArray("debug_label")]
+[node name="UI" type="CanvasLayer" parent="." node_paths=PackedStringArray("debug_label") groups=["players"]]
 script = ExtResource("5_p47bc")
 debug_label = NodePath("DebugLabel")
 

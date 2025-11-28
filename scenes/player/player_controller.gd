@@ -9,6 +9,7 @@ class_name Player
 
 var current_direction = "down"
 var is_moving = false
+var player_id: int
 @export var current_item: HeldItem = null
 
 func _enter_tree() -> void:
@@ -17,6 +18,7 @@ func _enter_tree() -> void:
 		$Camera2D.make_current()
 	else:
 		$Camera2D.set_enabled(false)
+	add_to_group("players")
 
 
 func _physics_process(_delta: float) -> void:
@@ -38,7 +40,6 @@ func _physics_process(_delta: float) -> void:
 		current_direction = "down" if velocity.y > 0 else "up"
 	update_animation()
 	
-
 	move_and_slide()
 
 
