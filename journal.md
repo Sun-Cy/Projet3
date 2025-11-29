@@ -54,3 +54,7 @@
 - ajouter un debug overlay avec F3
 - ajouter la fonction de rebind des controls
 - ajouter une crate pour tester le system de component
+
+### Cedrik 29-11-2025
+- Utilise GPT pour m'explique comment vsync fonctione sur plusieurs moniteur
+- Changer l'organisation des fichiers
