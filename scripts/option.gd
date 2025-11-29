@@ -2,6 +2,16 @@ extends Control
 
 enum WindowMode { WINDOWED, BORDERLESS, FULLSCREEN }
 
+var _waiting_button: Button = null
+var _last_input: String = ""
+var _waiting_for_action: StringName = &""
+
+const CFG_PATH := "user://options.cfg"
+var settings := {
+	"display": {"mode": "windowed", "ui_scale": 1.0, "vsync": false, "fps_cap": 0},
+	"audio":   {"master": 0.90, "music": 0.70, "sfx": 0.75, "ui": 0.80},
+}
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	load_settings()
@@ -18,11 +28,6 @@ func _ready() -> void:
 	_set_bus_volume("UI", settings.audio.ui)
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta: float) -> void:
-	pass
-
-
 func _set_window_mode(fullscreen: bool, borderless: bool) -> void:
 	var w := get_window()
 	if fullscreen:
@@ -30,18 +35,17 @@ func _set_window_mode(fullscreen: bool, borderless: bool) -> void:
 		w.mode = Window.MODE_FULLSCREEN
 		w.borderless = false  # (Optional) keep your non-FS states clean afterwards. 
 		return
-
+	
 	# Windowed path
 	w.mode = Window.MODE_WINDOWED
 	w.borderless = borderless
-
+	
 	if borderless:
 		# Make it *cover* the current screen: set size and move to (0,0) on that screen.
 		var screen := w.current_screen
 		size = DisplayServer.screen_get_size(screen)
 		w.size = size
 		w.position = DisplayServer.screen_get_position(screen)  # usually (0,0) for that monitor
-
 
 
 func _set_ui_scale(f: float) -> void:
@@ -64,11 +68,12 @@ func _set_bus_volume(bus_name: String, linear_0_1: float) -> void:
 	AudioServer.set_bus_volume_db(idx, linear_to_db(clamp(linear_0_1, 0.0, 1.0)))
 
 
-var _waiting_for_action: StringName = &""
-
-func start_rebind(action: StringName) -> void:
+func start_rebind(action: StringName, button: Button) -> void:
 	_waiting_for_action = action
+	_waiting_button = button
+	button.text = "Press a key..."
 	set_process_input(true)
+
 
 func _input(event: InputEvent) -> void:
 	if _waiting_for_action == &"": return
@@ -76,15 +81,18 @@ func _input(event: InputEvent) -> void:
 		# Clear existing and add the new one
 		InputMap.action_erase_events(_waiting_for_action)
 		InputMap.action_add_event(_waiting_for_action, event)
+		_last_input = event.as_text()
+		
+		# Update label text
+		_last_input = event.as_text()
+		if _waiting_button:
+			_waiting_button.text = _last_input
+		
+		# Reset state
 		_waiting_for_action = &""
+		_waiting_button = null
 		set_process_input(false)
 
-
-const CFG_PATH := "user://options.cfg"
-var settings := {
-	"display": {"mode": "windowed", "ui_scale": 1.0, "vsync": false, "fps_cap": 0},
-	"audio":   {"master": 0.90, "music": 0.70, "sfx": 0.75, "ui": 0.80},
-}
 
 func save_settings() -> void:
 	var cfg := ConfigFile.new()
@@ -185,3 +193,27 @@ func _on_ui_audio_value_changed(value: float) -> void:
 
 func _on_back_pressed() -> void:
 	self.visible = false
+
+
+func _on_move_up_button_pressed() -> void:
+	start_rebind(&"up", %MoveUpButton)
+
+
+func _on_move_down_button_pressed() -> void:
+	start_rebind(&"down", %MoveDownButton)
+
+
+func _on_move_left_button_pressed() -> void:
+	start_rebind(&"left", %MoveLeftButton)
+
+
+func _on_move_right_button_pressed() -> void:
+	start_rebind(&"right", %MoveRightButton)
+
+
+func _on_use_button_pressed() -> void:
+	start_rebind(&"attack_primary", %UseButton)
+
+
+func _on_special_use_button_pressed() -> void:
+	start_rebind(&"attack_secondary", %SpecialUseButton)

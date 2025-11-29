@@ -41,9 +41,10 @@ theme_override_constants/margin_bottom = 20
 
 [node name="TabContainer" type="TabContainer" parent="MarginContainer"]
 layout_mode = 2
-current_tab = 0
+current_tab = 2
 
 [node name="Display" type="TabBar" parent="MarginContainer/TabContainer"]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 
@@ -203,7 +204,6 @@ size_flags_vertical = 4
 value = 50.0
 
 [node name="Control" type="TabBar" parent="MarginContainer/TabContainer"]
-visible = false
 layout_mode = 2
 metadata/_tab_index = 2
 
@@ -219,23 +219,91 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/TabContainer/Control/MarginContainer"]
+[node name="VBoxContainer" type="HBoxContainer" parent="MarginContainer/TabContainer/Control/MarginContainer"]
 layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 50
 alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/TabContainer/Control/MarginContainer/VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/TabContainer/Control/MarginContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_constants/separation = 16
 
-[node name="UpLabel" type="Label" parent="MarginContainer/TabContainer/Control/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="UpLabel" type="Label" parent="MarginContainer/TabContainer/Control/MarginContainer/VBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
 text = "Move Up"
 
-[node name="Button" type="Button" parent="MarginContainer/TabContainer/Control/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="DownLabel" type="Label" parent="MarginContainer/TabContainer/Control/MarginContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Move Down"
+
+[node name="LeftLabel" type="Label" parent="MarginContainer/TabContainer/Control/MarginContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Move Left"
+
+[node name="RightLabel" type="Label" parent="MarginContainer/TabContainer/Control/MarginContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Move Right"
+
+[node name="UseLabel" type="Label" parent="MarginContainer/TabContainer/Control/MarginContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Use"
+
+[node name="SpecialUseLabel" type="Label" parent="MarginContainer/TabContainer/Control/MarginContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Special Use"
+
+[node name="HBoxContainer" type="VBoxContainer" parent="MarginContainer/TabContainer/Control/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 7
+
+[node name="MoveUpButton" type="Button" parent="MarginContainer/TabContainer/Control/MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 4
 text = "W"
+
+[node name="MoveDownButton" type="Button" parent="MarginContainer/TabContainer/Control/MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+text = "S"
+
+[node name="MoveLeftButton" type="Button" parent="MarginContainer/TabContainer/Control/MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+text = "A"
+
+[node name="MoveRightButton" type="Button" parent="MarginContainer/TabContainer/Control/MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+text = "D"
+
+[node name="UseButton" type="Button" parent="MarginContainer/TabContainer/Control/MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+text = "Left Mouse"
+
+[node name="SpecialUseButton" type="Button" parent="MarginContainer/TabContainer/Control/MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+text = "Right Mouse"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -263,4 +331,10 @@ text = "Back"
 [connection signal="value_changed" from="MarginContainer/TabContainer/Audio/VBoxContainer/HBoxContainer2/MusicAudio" to="." method="_on_music_audio_value_changed"]
 [connection signal="value_changed" from="MarginContainer/TabContainer/Audio/VBoxContainer/HBoxContainer3/SFXAudio" to="." method="_on_sfx_audio_value_changed"]
 [connection signal="value_changed" from="MarginContainer/TabContainer/Audio/VBoxContainer/HBoxContainer4/UIAudio" to="." method="_on_ui_audio_value_changed"]
+[connection signal="pressed" from="MarginContainer/TabContainer/Control/MarginContainer/VBoxContainer/HBoxContainer/MoveUpButton" to="." method="_on_move_up_button_pressed"]
+[connection signal="pressed" from="MarginContainer/TabContainer/Control/MarginContainer/VBoxContainer/HBoxContainer/MoveDownButton" to="." method="_on_move_down_button_pressed"]
+[connection signal="pressed" from="MarginContainer/TabContainer/Control/MarginContainer/VBoxContainer/HBoxContainer/MoveLeftButton" to="." method="_on_move_left_button_pressed"]
+[connection signal="pressed" from="MarginContainer/TabContainer/Control/MarginContainer/VBoxContainer/HBoxContainer/MoveRightButton" to="." method="_on_move_right_button_pressed"]
+[connection signal="pressed" from="MarginContainer/TabContainer/Control/MarginContainer/VBoxContainer/HBoxContainer/UseButton" to="." method="_on_use_button_pressed"]
+[connection signal="pressed" from="MarginContainer/TabContainer/Control/MarginContainer/VBoxContainer/HBoxContainer/SpecialUseButton" to="." method="_on_special_use_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/Back" to="." method="_on_back_pressed"]
