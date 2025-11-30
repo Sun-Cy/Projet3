@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://cn5vmt5b0i3wb"]
+
+[ext_resource type="Script" uid="uid://c54doxfogbfy0" path="res://scenes/component/component_script/interaction_component.gd" id="1_txkpn"]
+
+[node name="InteractionComponent" type="Area2D"]
+script = ExtResource("1_txkpn")
+
+[node name="InteractionLabel" type="Label" parent="."]
+offset_left = -29.0
+offset_top = -30.0
+offset_right = 11.0
+offset_bottom = 6.0
+theme_override_font_sizes/font_size = 8
+text = "E"
+horizontal_alignment = 1
+vertical_alignment = 1

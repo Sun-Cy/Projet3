@@ -1,9 +1,10 @@
-[gd_scene load_steps=33 format=3 uid="uid://cfq0k4ct2jisj"]
+[gd_scene load_steps=35 format=3 uid="uid://cfq0k4ct2jisj"]
 
 [ext_resource type="Texture2D" uid="uid://rhoeui6h2arh" path="res://asset/Characters/Basic Charakter Spritesheet.png" id="1_8afob"]
 [ext_resource type="Script" uid="uid://bbsbi62h33ti5" path="res://scenes/player/player_controller.gd" id="1_dovo2"]
 [ext_resource type="Texture2D" uid="uid://bj6g3h0ji0354" path="res://asset/Characters/Basic Charakter Actions.png" id="2_p47bc"]
 [ext_resource type="Script" uid="uid://cym0ntk2tvkqw" path="res://scenes/player/ui.gd" id="5_p47bc"]
+[ext_resource type="PackedScene" uid="uid://bvlt737246qp" path="res://scenes/component/inventory_component.tscn" id="6_0owmy"]
 [ext_resource type="PackedScene" uid="uid://c68wql8v35awg" path="res://scenes/item/AxeItem.tscn" id="6_75vfm"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kvlxm"]
@@ -254,6 +255,9 @@ properties/3/path = NodePath("ItemPivot:rotation")
 properties/3/spawn = true
 properties/3/replication_mode = 1
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_p47bc"]
+radius = 18.0
+
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("current_item") groups=["players"]]
 y_sort_enabled = true
 collision_mask = 6
@@ -294,3 +298,33 @@ offset_right = -97.0
 offset_bottom = -445.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="HotbarUI" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -40.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Slots" type="HBoxContainer" parent="UI/HotbarUI"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TextureRect" type="TextureRect" parent="UI/HotbarUI/Slots"]
+layout_mode = 2
+
+[node name="PickupItem" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PickupItem"]
+shape = SubResource("CircleShape2D_p47bc")
+
+[node name="InventoryComponent" parent="." instance=ExtResource("6_0owmy")]

@@ -1,9 +1,15 @@
 extends Node2D
 class_name HealthComponent
 
+# How to
+# add to the scene
+# Change Max health and assigne a animation player if you want a damage animation
+# Require a hitbox to receive damage
+
 @export var MAX_HEALTH: float = 10.0
 @export var animation: AnimationPlayer
-@export var health: float      # export so MultiplayerSynchronizer can see it
+
+var health: float      # export so MultiplayerSynchronizer can see it
 
 signal health_changed(current: float, max: float)
 signal died

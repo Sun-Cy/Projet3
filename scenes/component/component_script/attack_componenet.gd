@@ -1,14 +1,20 @@
 extends Area2D
 class_name AttackComponent
 
+# To use
+# Add a Collision2D to the Attack component
+# Change the Value
+# Use an animation player to animate the attack and call attack_once()
+
+
 @export var attack_damage: float = 5.0
 @export var knockback_force: float = 200.0
 
 var _is_attacking: bool = false
 
 func attack_once() -> void:
-	print("Bodies:", get_overlapping_bodies())
-	print("Areas:", get_overlapping_areas())
+	#print("Bodies:", get_overlapping_bodies())
+	#print("Areas:", get_overlapping_areas())
 	
 	if _is_attacking:
 		return

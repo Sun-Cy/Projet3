@@ -58,3 +58,9 @@
 ### Cedrik 29-11-2025
 - Utilise GPT pour m'explique comment vsync fonctione sur plusieurs moniteur
 - Changer l'organisation des fichiers
+- Regler la coilision du terrain
+
+### Cedrik 30-11-2025
+- Fini lajout d'un composant interaction avec l'aide the GPT je lui ai demande la meilleure facon de creer le composant
+- Ajout d'un component inventaire
+- ajout d'un UI pour l'envantaire mais pas complet

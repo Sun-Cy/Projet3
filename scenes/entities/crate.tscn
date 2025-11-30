@@ -1,9 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://dm43v4ju3di3r"]
+[gd_scene load_steps=13 format=3 uid="uid://dm43v4ju3di3r"]
 
 [ext_resource type="Script" uid="uid://dtwgry743whl" path="res://scenes/entities/entities_script/crate.gd" id="1_74u5o"]
 [ext_resource type="Texture2D" uid="uid://c4ug0c22bmhvl" path="res://asset/Objects/Chest.png" id="1_b66cd"]
 [ext_resource type="PackedScene" uid="uid://cg8m8kq03rh4b" path="res://scenes/component/health_component.tscn" id="2_kn6iu"]
 [ext_resource type="PackedScene" uid="uid://c3t5f7ovvvto4" path="res://scenes/component/hitbox_component.tscn" id="3_74u5o"]
+[ext_resource type="PackedScene" uid="uid://cn5vmt5b0i3wb" path="res://scenes/component/interaction_component.tscn" id="5_xci0n"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dwt0d"]
 atlas = ExtResource("1_b66cd")
@@ -119,6 +120,8 @@ properties/3/spawn = true
 properties/3/replication_mode = 2
 
 [node name="Crate" type="StaticBody2D"]
+collision_layer = 2
+collision_mask = 0
 script = ExtResource("1_74u5o")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -145,3 +148,6 @@ replication_config = SubResource("SceneReplicationConfig_pji31")
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
 y_sort_enabled = true
 shape = SubResource("RectangleShape2D_1kl6c")
+
+[node name="InteractionComponent" parent="." instance=ExtResource("5_xci0n")]
+interaction_range = 20.0
