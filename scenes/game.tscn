@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=4 uid="uid://b8q4k3g2kge6t"]
+[gd_scene load_steps=10 format=4 uid="uid://b8q4k3g2kge6t"]
 
 [ext_resource type="Script" uid="uid://cj4pgmgmto4j0" path="res://scenes/game.gd" id="1_p57ef"]
 [ext_resource type="PackedScene" uid="uid://cfq0k4ct2jisj" path="res://scenes/player/player.tscn" id="1_uwrxv"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://c07h3bt0sicdh" path="res://scenes/entities/tree.tscn" id="4_lbhrr"]
 [ext_resource type="Script" uid="uid://bj3k4pe6ufu1d" path="res://scenes/entities_sync.gd" id="5_iywne"]
 [ext_resource type="PackedScene" uid="uid://dm43v4ju3di3r" path="res://scenes/entities/crate.tscn" id="8_gee14"]
+[ext_resource type="Script" uid="uid://jwokliy5acdu" path="res://scenes/player/hotbar_ui.gd" id="9_0tnpc"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_p57ef")
@@ -75,6 +76,15 @@ script = ExtResource("5_iywne")
 [node name="Players" type="Node2D" parent="Entities"]
 y_sort_enabled = true
 position = Vector2(0, -3)
+
+[node name="Control" type="Control" parent="Entities/Players"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -21.0
+offset_top = 151.0
+offset_right = 211.0
+offset_bottom = 191.0
+script = ExtResource("9_0tnpc")
 
 [node name="Tree" parent="Entities" instance=ExtResource("4_lbhrr")]
 position = Vector2(162, 76)

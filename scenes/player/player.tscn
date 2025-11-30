@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://bbsbi62h33ti5" path="res://scenes/player/player_controller.gd" id="1_dovo2"]
 [ext_resource type="Texture2D" uid="uid://bj6g3h0ji0354" path="res://asset/Characters/Basic Charakter Actions.png" id="2_p47bc"]
 [ext_resource type="Script" uid="uid://cym0ntk2tvkqw" path="res://scenes/player/ui.gd" id="5_p47bc"]
+[ext_resource type="Script" uid="uid://hotbarui" path="res://scenes/player/hotbar_ui.gd" id="7_hotbar"]
 [ext_resource type="PackedScene" uid="uid://bvlt737246qp" path="res://scenes/component/inventory_component.tscn" id="6_0owmy"]
 [ext_resource type="PackedScene" uid="uid://c68wql8v35awg" path="res://scenes/item/AxeItem.tscn" id="6_75vfm"]
 
@@ -311,6 +312,7 @@ offset_top = -40.0
 offset_right = 20.0
 grow_horizontal = 2
 grow_vertical = 0
+script = ExtResource("7_hotbar")
 
 [node name="Slots" type="HBoxContainer" parent="UI/HotbarUI"]
 layout_mode = 0

@@ -8,6 +8,7 @@ class_name Player
 
 const INVENTORY_SIZE := 10
 var inventory_slots: Array[ItemData] = []
+@onready var inventory_comp: InventoryComponent = $InventoryComponent
 var selected_slot: int = 0
 var _current_interactable: InteractableComponent = null
 
@@ -26,11 +27,24 @@ func _enter_tree() -> void:
 		$Camera2D.set_enabled(false)
 	add_to_group("players")
 
+func _ready() -> void:
+	# Initialize inventory reference and hotbar
+	if inventory_comp:
+		inventory_comp.inventory_changed.connect(_on_inventory_changed)
+		# Keep a direct reference to the slots array for convenience
+		inventory_slots = inventory_comp.slots
+	else:
+		# fallback: ensure inventory_slots has the right size
+		inventory_slots.resize(INVENTORY_SIZE)
+		for i in range(INVENTORY_SIZE):
+			inventory_slots[i] = null
+
+	_update_hotbar()
 
 func _physics_process(_delta: float) -> void:
 	if !is_multiplayer_authority(): return
 	
-	var direction := Input.get_vector("left", "right", "up", "down").normalized().round()
+	var direction := Input.get_vector("left", "right", "up", "down").normalized()
 	
 	if direction:
 		velocity = direction * SPEED
@@ -93,13 +107,13 @@ func _process(_delta: float) -> void:
 			current_item.use_secondary()
 	
 	if Input.is_action_just_pressed("drop_item"):
-		pass # drop the item
+		_drop_selected_item()
 	
 	if Input.is_action_just_pressed("drop_all_item"):
-		pass # drop all the item
+		_drop_all_items()
 	
 	if Input.is_action_just_pressed("drop_half_item"):
-		pass # drop half the item
+		_drop_half_item()
 
 
 func update_animation():
@@ -128,6 +142,68 @@ func equip_item(item_scene: PackedScene) -> void:
 	current_item = item
 
 
+func add_item(data: ItemData) -> bool:
+	# Try to insert through the InventoryComponent if available
+	if inventory_comp:
+		return inventory_comp.add_item(data)
+
+	# Fallback: find first empty slot
+	for i in range(INVENTORY_SIZE):
+		if inventory_slots[i] == null:
+			inventory_slots[i] = data
+			_update_hotbar()
+			return true
+	return false
+
+
+func remove_item(slot_idx: int) -> ItemData:
+	if inventory_comp:
+		return inventory_comp.removed_item(slot_idx)
+
+	if slot_idx < 0 or slot_idx >= INVENTORY_SIZE:
+		return null
+	var d = inventory_slots[slot_idx]
+	inventory_slots[slot_idx] = null
+	_update_hotbar()
+	return d
+
+
+func _drop_selected_item() -> void:
+	var data: ItemData = inventory_comp.get_slot(selected_slot) if inventory_comp else inventory_slots[selected_slot]
+	if not data:
+		return
+	# spawn world pickup if available
+	if data.world_pickup_scene:
+		var pickup = data.world_pickup_scene.instantiate()
+		get_parent().add_child(pickup)
+		pickup.global_position = global_position
+	remove_item(selected_slot)
+
+
+func _drop_all_items() -> void:
+	if inventory_comp:
+		for i in range(inventory_comp.slot_count):
+			var d = inventory_comp.removed_item(i)
+			if d and d.world_pickup_scene:
+				var p = d.world_pickup_scene.instantiate()
+				get_parent().add_child(p)
+				p.global_position = global_position
+	else:
+		for i in range(INVENTORY_SIZE):
+			if inventory_slots[i]:
+				if inventory_slots[i].world_pickup_scene:
+					var p2 = inventory_slots[i].world_pickup_scene.instantiate()
+					get_parent().add_child(p2)
+					p2.global_position = global_position
+				inventory_slots[i] = null
+	_update_hotbar()
+
+
+func _drop_half_item() -> void:
+	# No stack counts implemented: treat as dropping selected item
+	_drop_selected_item()
+
+
 # function related to hotbar
 func _change_selected_slot(delta: int) -> void:
 	selected_slot = (selected_slot + delta + INVENTORY_SIZE) % INVENTORY_SIZE
@@ -143,7 +219,7 @@ func _set_selected_slot(index: int) -> void:
 
 
 func _equip_selected_item() -> void:
-	var data: ItemData = inventory_slots[selected_slot]
+	var data: ItemData = inventory_comp.get_slot(selected_slot) if inventory_comp else inventory_slots[selected_slot]
 	if data and data.held_scene:
 		equip_item(data.held_scene)
 	else:
@@ -156,8 +232,15 @@ func _equip_selected_item() -> void:
 
 func _update_hotbar() -> void:
 	if hotbar_ui:
-		hotbar_ui.set_slots(inventory_slots)
-		hotbar_ui.set_selected_index(selected_slot)
+		var slots_ref = inventory_comp.slots if inventory_comp else inventory_slots
+		hotbar_ui.call("set_slots", slots_ref)
+		hotbar_ui.call("set_selected_index", selected_slot)
+
+
+func _on_inventory_changed() -> void:
+	if inventory_comp:
+		inventory_slots = inventory_comp.slots
+	_update_hotbar()
 
 
 # Function to interact with object

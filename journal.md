@@ -49,6 +49,9 @@
 - Fini le code de DamageComponent et les animations pour les arbres
 - Faire marche le multiplayer pour la coupe d'arbre avec l'aide the chatGPT
 
+### Mathys 27-11-2025
+- Fix le bug diagonal aller trop vite en diagonal.
+
 ### Cedrik 28-11-2025
 - Finalement reperer le multiplayers pour vrai
 - ajouter un debug overlay avec F3
@@ -64,3 +67,8 @@
 - Fini lajout d'un composant interaction avec l'aide the GPT je lui ai demande la meilleure facon de creer le composant
 - Ajout d'un component inventaire
 - ajout d'un UI pour l'envantaire mais pas complet
+
+### Mathys 30-11-2025
+- Faire en sorte que le coffre despawn quand on intéragit avec GPT
+- Tenter de faire un interface graphique pour l'inventaire
+- Essayer de continuer le système d'inventaire avec GPT
