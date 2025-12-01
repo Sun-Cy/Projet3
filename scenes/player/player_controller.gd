@@ -89,7 +89,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	
 	if event.is_action_pressed("interact"):  # interaction
 		if _current_interactable:
-			_current_interactable.trigger(self)
+			_current_interactable.trigger.rpc(name.to_int())
 
 
 func _process(_delta: float) -> void:

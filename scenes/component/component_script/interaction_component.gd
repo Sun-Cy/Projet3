@@ -26,7 +26,7 @@ func _ready() -> void:
 	add_child(collision)
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if _players.is_empty():
 		int_label.visible = false
 	else:
@@ -60,7 +60,14 @@ func _on_body_exited(body: Node2D) -> void:
 	if body.has_method("clear_current_interactable"):
 		body.clear_current_interactable(self)
 
-
-func trigger(actor: Node2D) -> void:
-	if owner and owner.has_method("interact"):
+@rpc("any_peer", "call_local")
+func trigger(actor_peer_id: int) -> void:
+	# Find the player with this peer ID (or authority) locally
+	var actor: Node2D = null
+	for p in get_tree().get_nodes_in_group("players"):
+		if p.get_multiplayer_authority() == actor_peer_id:
+			actor = p
+			break
+	
+	if owner and owner.has_method("interact") and actor:
 		owner.interact(actor)

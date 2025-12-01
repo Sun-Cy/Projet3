@@ -59,11 +59,27 @@ func _apply_damage(damage_amount: float) -> void:
 			animation.play("damage")
 
 
+func kill() -> void:
+	health = 0.0
+	health_changed.emit(health, MAX_HEALTH)
+	died.emit()
+	if animation and animation.has_animation("died"):
+		animation.play("died")
+	else:
+		rpc("destroy_for_everyone")
+
+
+
 @rpc("any_peer", "call_local")
 func destroy_for_everyone() -> void:
-	queue_free()
+	get_parent().queue_free()
 
 
 func _on_anim_finished(anim_name: StringName) -> void:
+	# Only authority decides when to destroy
+	if not is_multiplayer_authority():
+		return
+
+	# Only act on the "died" animation
 	if anim_name == "died":
-		destroy_for_everyone()
+		rpc("destroy_for_everyone")

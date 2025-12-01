@@ -87,7 +87,13 @@
 - Tenter de faire un interface graphique pour l'inventaire
 - Essayer de continuer le système d'inventaire avec GPT
 
-### 31-11-2025
+### Mathys 31-11-2025
 
 - Ajouter la hotbar avec Copilot
 - Syncroniser la disparition du coffre avec le multiplayer
+
+### Cedrik 1-12-2025
+
+- Regler un probleme de desynchronisation de l'arbre et de la crate
+- Demander a GPT un cheat sheet pour le multiplayer
+- Demander a GPT comment funtionais RPC (une fonction pour le multiplayer)

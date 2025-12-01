@@ -9,8 +9,7 @@ var default_slot_texture: Texture = null
 func _get_default_slot_texture() -> Texture:
 	if default_slot_texture:
 		return default_slot_texture
-	var img = Image.new()
-	img.create(32, 32, false, Image.FORMAT_RGBA8)
+	var img = Image.create(32, 32, false, Image.FORMAT_RGBA8)
 	for x in range(img.get_width()):
 		for y in range(img.get_height()):
 			img.set_pixel(x, y, Color(0.18, 0.18, 0.18, 1))
