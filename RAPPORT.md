@@ -44,8 +44,7 @@ Godot 4.5 est un moteur de jeu libre et multiplateforme, avec un langage de scri
 Principales caractéristiques que nous avons exploitées :
 
 - **GDScript** : syntaxe claire et concise, idéale pour prototyper rapidement des mécaniques.
-- **Scènes et nœuds** : architecture orientée composants (nodes + scripts), très flexible pour structurer un jeu 2D.
-- **Export multiplateforme** : possibilité de cibler Windows, macOS, Linux, Android, iOS et le Web.
+- **Scènes et node** : architecture orientée composants (nodes + scripts), très flexible pour structurer un jeu 2D.
 - **Légèreté** : l’éditeur reste relativement léger et simple à installer, ce qui facilite le travail en équipe sur différents postes.
 
 ### 2.2. Multijoueur en temps réel dans Godot
@@ -53,15 +52,15 @@ Principales caractéristiques que nous avons exploitées :
 La principale découverte technique concerne le **multijoueur** :
 
 - Utilisation de **RPC** (Remote Procedure Calls) pour synchroniser des actions entre le serveur et les clients (ex. : coupe d’arbres, destruction d’objets, ouverture de coffres).
-- Gestion de l’**autorité réseau** (`multiplayer_authority`) sur les nœuds joueurs et les entités, pour éviter les conflits entre clients.
+- Gestion de l’**autorité réseau** (`multiplayer_authority`) sur les node joueurs et les entités, pour éviter les conflits entre clients.
 - Expérimentation des **MultiplayerSynchronizer** et des bonnes pratiques de synchronisation (états, position, santé, inventaire).
-- Compréhension des difficultés liées au **temps réel** : latence, désynchronisations et propagation des changements dans la scène.
+- Compréhension des difficultés liées au **temps réel** : désynchronisations et propagation des changements dans la scène.
 
 ---
 
 ## 3. Prototype réalisé
 
-Nous avons développé un **prototype de jeu 2D multijoueur** avec les éléments suivants (synthèse basée sur le journal de bord):contentReference[oaicite:2]{index=2} :
+Nous avons développé un **prototype de jeu 2D multijoueur** avec les éléments suivants
 
 ### 3.1. Fonctionnalités principales
 
@@ -79,19 +78,18 @@ Nous avons développé un **prototype de jeu 2D multijoueur** avec les élément
   - Ajout d’un overlay autour des tiles pour permettre l’interaction (ex. : arbres, coffre, crate).
 
 - **Système de composants**
-  - Composant de **santé** et **dommages** pour les arbres et autres entités.
-  - Animations de dommages et de mort des arbres.
+  - Composant de **Health** et **Hitbox** pour les arbres et autres entités.
+  - Animations de dommages et de mort des entites.
   - Introduction d’un système de **component** pour pouvoir réutiliser la logique (damage, interaction, inventaire, etc.).
 
 - **Inventaire et interface**
-  - Ajout d’un **inventaire** et d’un **UI de hotbar** (barre rapide).
-  - Intégration d’une hache dans l’inventaire par défaut.
-  - Synchronisation de la disparition du coffre avec le multijoueur.
+  - Ajout d’un **inventaire** et d’un **UI de hotbar**.
+  - Intégration d’une hache dans l’inventaire par défaut pour faire des testes.
 
 - **Multijoueur**
   - Mise en place d’un système **peer-to-peer** (serveur/client) avec plusieurs joueurs.
   - Caméra indépendante par joueur.
-  - Synchronisation de la coupe d’arbres et de la destruction des entités en réseau.
+  - Synchronisation et de la destruction des entités en réseau.
   - Debug overlay (F3) pour suivre l’état du multijoueur.
 
 ### 3.2. Rôle de l’IA dans le prototype
@@ -107,8 +105,6 @@ Tout au long du développement, l’IA a été utilisée pour :
 ---
 
 ## 4. Utilisation de l’IA : méthodologie et retour d’expérience
-
-Conformément aux consignes, l’IA a été utilisée comme **outil d’aide**, et non comme simple générateur de contenu.  
 
 ### 4.1. Phase 1 – IA comme assistant de compréhension (Mathys)
 
@@ -174,7 +170,7 @@ Pour Cedrik, le plus grand apprentissage concerne la **complexité réelle du mu
 
 Un exemple marquant :
 - ajouter un item pour couper des arbres a pris **environ 2 heures**;
-- mais comprendre le système multijoueur, synchroniser les dégâts et la destruction des arbres a pris **2 jours complets**.
+- mais comprendre le système multijoueur, synchroniser les dégâts et la destruction des arbres a pris **2 jours**.
 
 Les principaux enseignements :
 
@@ -182,11 +178,11 @@ Les principaux enseignements :
 - il est facile de créer des **désynchronisations** (arbres visibles détruits d’un côté, mais encore présents de l’autre);
 - l’IA peut expliquer les concepts, mais les **tests en conditions réelles** restent indispensables.
 
-Cedrik a aussi beaucoup appris sur :
+a aussi appris sur :
 
 - l’organisation d’un projet Godot (arborescence, composants),
-- la gestion du **VSync** et des performances,
-- la mise en place d’un système générique d’interaction et d’inventaire.
+- la gestion des parametre graphique (Vsync, windowed et autre),
+- la mise en place d’un système générique de composantes qui permet la creation rapide.
 
 ---
 
@@ -197,13 +193,13 @@ Cedrik a aussi beaucoup appris sur :
 **Points forts :**
 
 - Facile à prendre en main grâce à GDScript et à l’interface de l’éditeur.
-- Architecture par scènes et nœuds très flexible pour expérimenter.
+- Architecture par scènes et node très flexible pour expérimenter.
 - Fonctionnalités 2D robustes (YSort, TileMap, collisions, animations).
 - Support intégré du multijoueur, même si complexe, avec RPC et outils dédiés.
 
 **Limites rencontrées :**
 
-- Le multijoueur demande une compréhension fine de concepts tels que l’**autorité**, la **latence**, et la **synchronisation d’état**.
+- Le multijoueur demande une compréhension fine de concepts tels que l’**autorité** et la **synchronisation d’état**.
 - Certains cas concrets (par ex. synchronisation d’arbres destructibles ou d’objets d’inventaire) nécessitent beaucoup de tests et de débogage.
 - La documentation est bonne, mais certains scénarios avancés manquent d’exemples directement applicables à notre architecture.
 
