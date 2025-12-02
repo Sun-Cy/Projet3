@@ -222,13 +222,16 @@ func _drop_half_item() -> void:
 
 # function related to hotbar
 func _change_selected_slot(delta: int) -> void:
-	selected_slot = (selected_slot + delta + INVENTORY_SIZE) % INVENTORY_SIZE
-	_equip_selected_item()
-	_update_hotbar()
+	var new_slot = (selected_slot + delta + INVENTORY_SIZE) % INVENTORY_SIZE
+	set_equipped_slot.rpc(new_slot)
 
 func _set_selected_slot(index: int) -> void:
 	if index < 0 or index >= INVENTORY_SIZE:
 		return
+	set_equipped_slot.rpc(index)
+
+@rpc("call_local")
+func set_equipped_slot(index: int) -> void:
 	selected_slot = index
 	_equip_selected_item()
 	_update_hotbar()
