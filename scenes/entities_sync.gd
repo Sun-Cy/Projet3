@@ -25,7 +25,7 @@ func _on_peer_connected(peer_id: int) -> void:
 	_rpc_receive_entities_snapshot.rpc_id(peer_id, snapshot)
 
 
-@rpc("authority")
+@rpc("any_peer")
 func _rpc_receive_entities_snapshot(snapshot: Array) -> void:
 	# Safety: this RPC should only be processed on clients.
 	if multiplayer.is_server():
@@ -66,6 +66,8 @@ func _rpc_receive_entities_snapshot(snapshot: Array) -> void:
 	# Remove ghosts: entities that exist locally but are not in the snapshot.
 	for name in existing.keys():
 		# If the server didn’t send this name, this is a ghost → delete it.
+		if name == "ItemSpawner":
+			continue
 		if not seen.has(name):
 			var ghost: Node2D = existing[name]
 			ghost.queue_free()

@@ -5,7 +5,7 @@ class_name Player
 
 const DROP_PROTECTION_TIME := 0.75        # seconds during which you cannot re-pick your own drop
 const INVENTORY_SIZE := 10
-const DEFAULT_AXE_SCENE: PackedScene = preload("res://scenes/item/AxeItem.tscn")
+const DEFAULT_AXE_SCENE: PackedScene = preload("res://scenes/item/axe/axe_item.tscn")
 
 
 ## Signals --------------------------------------------------------------------
@@ -61,23 +61,7 @@ func _ready() -> void:
 		inventory_slots.resize(INVENTORY_SIZE)
 		for i in range(INVENTORY_SIZE):
 			inventory_slots[i] = null
-
-	# Ensure Axe is in slot 0 if empty
-	if inventory_slots[0] == null:
-		var axe_data := ItemData.new()
-		axe_data.display_name = "Axe"
-		axe_data.held_scene = DEFAULT_AXE_SCENE
-
-		var atlas := AtlasTexture.new()
-		atlas.atlas = preload("res://asset/Objects/Basic_tools_and_meterials.png")
-		atlas.region = Rect2(17, 0, 15, 17)
-		axe_data.icon = atlas
-
-		if inventory_comp:
-			inventory_comp.set_slot(0, axe_data)
-		else:
-			inventory_slots[0] = axe_data
-
+	
 	_update_hotbar()
 
 
@@ -148,7 +132,7 @@ func _process(delta: float) -> void:
 			current_item.use_secondary()
 
 	if Input.is_action_just_pressed("drop_item"):
-		_drop_selected_item()
+		_request_drop_selected_item()
 
 	if Input.is_action_just_pressed("drop_all_item"):
 		_drop_all_items()
@@ -175,6 +159,7 @@ func _update_item_aim() -> void:
 
 ## Equipment ------------------------------------------------------------------
 
+@rpc("any_peer","call_local")
 func equip_item(item_scene: PackedScene) -> void:
 	if current_item:
 		current_item.on_unequipped()
@@ -220,43 +205,66 @@ func remove_item(slot_idx: int) -> ItemData:
 
 ## Dropping items -------------------------------------------------------------
 
-func _drop_selected_item() -> void:
-	var data: ItemData = inventory_comp.get_slot(selected_slot) if inventory_comp else inventory_slots[selected_slot]
+func _request_drop_selected_item() -> void:
+	var server_id := 1
+	rpc_id(server_id,"rpc_drop_item",selected_slot)
+
+
+@rpc("any_peer")
+func rpc_drop_item(slot_index: int) -> void:
+	# This method runs on the SERVER's Player instance
+	if !is_multiplayer_authority():
+		return  # ignore if somehow called on a non-authority copy
+	
+	_drop_selected_item_on_server(slot_index)
+
+
+func _drop_selected_item_on_server(slot_index: int) -> void:
+	var data: ItemData = inventory_comp.get_slot(slot_index) if inventory_comp else inventory_slots[slot_index]
 	if not data:
 		return
 
+	# Remove from inventory on server copy
+	remove_item(slot_index)
+
+	# Spawn world pickup **under the WorldItems container** so MultiplayerSpawner syncs it.
 	if data.world_pickup_scene:
-		var pickup := data.world_pickup_scene.instantiate()
-		get_parent().add_child(pickup)
+		var pickup := data.world_pickup_scene.instantiate() as WorldPickup
+		var world_items_root := get_tree().root.get_node("Main/WorldItems") # adjust path
+		world_items_root.add_child(pickup)
+	
 		pickup.global_position = global_position
-		_track_dropped_pickup(pickup)
-
-	remove_item(selected_slot)
-
-
-func _drop_all_items() -> void:
-	if inventory_comp:
-		for i in range(inventory_comp.slot_count):
-			var d: ItemData = inventory_comp.removed_item(i)
-			if d and d.world_pickup_scene:
-				var p := d.world_pickup_scene.instantiate()
-				get_parent().add_child(p)
-				p.global_position = global_position
-	else:
-		for i in range(INVENTORY_SIZE):
-			if inventory_slots[i]:
-				if inventory_slots[i].world_pickup_scene:
-					var p2 := inventory_slots[i].world_pickup_scene.instantiate()
-					get_parent().add_child(p2)
-					p2.global_position = global_position
-				inventory_slots[i] = null
-
-	_update_hotbar()
+		pickup.item_data = data
+	
+		_track_dropped_pickup(pickup)  # your existing drop protection logic
 
 
-func _drop_half_item() -> void:
-	# No stack counts implemented: treat as dropping selected item
-	_drop_selected_item()
+
+
+func _drop_all_items() -> void: # todo
+	pass
+
+
+func _drop_half_item() -> void: # todo
+	pass
+
+@rpc("any_peer", "call_local")
+func rpc_pickup_item(pickup_path: NodePath) -> void:
+	if !is_multiplayer_authority():
+		return  # only server version of this player should handle
+
+	var pickup := get_tree().get_root().get_node_or_null(pickup_path) as WorldPickup
+	if pickup == null:
+		return  # already taken by someone else or deleted
+
+	# Optional: server-side equivalent of drop protection
+	if just_dropped.has(pickup):
+		return
+
+	# Try to add to this player's inventory on server
+	if inventory_comp.add_item(pickup.item_data):
+		rpc("destroy_for_everyone", pickup)
+
 
 
 ## Hotbar handling ------------------------------------------------------------
@@ -284,11 +292,11 @@ func _equip_selected_item() -> void:
 	var data: ItemData = inventory_comp.get_slot(selected_slot) if inventory_comp else inventory_slots[selected_slot]
 
 	if data and data.held_scene:
-		equip_item(data.held_scene)
+		rpc("equip_item",data.held_scene)
 	else:
 		if current_item:
 			current_item.on_unequipped()
-			current_item.queue_free()
+			rpc("destroy_for_everyone", current_item)
 			current_item = null
 
 
@@ -340,3 +348,8 @@ func _track_dropped_pickup(pickup: Node2D) -> void:
 
 func _on_dropped_pickup_freed(pickup: Node2D) -> void:
 	just_dropped.erase(pickup)
+
+
+@rpc("any_peer", "call_local")
+func destroy_for_everyone(node:Node) -> void:
+	node.queue_free()

@@ -1,45 +1,11 @@
-[gd_scene load_steps=37 format=3 uid="uid://cfq0k4ct2jisj"]
+[gd_scene load_steps=27 format=3 uid="uid://cfq0k4ct2jisj"]
 
 [ext_resource type="Texture2D" uid="uid://rhoeui6h2arh" path="res://asset/Characters/Basic Charakter Spritesheet.png" id="1_8afob"]
 [ext_resource type="Script" uid="uid://bbsbi62h33ti5" path="res://scenes/player/player_controller.gd" id="1_dovo2"]
-[ext_resource type="Texture2D" uid="uid://bj6g3h0ji0354" path="res://asset/Characters/Basic Charakter Actions.png" id="2_p47bc"]
 [ext_resource type="Script" uid="uid://cym0ntk2tvkqw" path="res://scenes/player/ui.gd" id="5_p47bc"]
 [ext_resource type="PackedScene" uid="uid://bvlt737246qp" path="res://scenes/component/inventory_component.tscn" id="6_0owmy"]
-[ext_resource type="PackedScene" uid="uid://c68wql8v35awg" path="res://scenes/item/AxeItem.tscn" id="6_75vfm"]
 [ext_resource type="Script" uid="uid://jwokliy5acdu" path="res://scenes/player/hotbar_ui.gd" id="7_hotbar"]
 [ext_resource type="Script" uid="uid://28e1scyufryj" path="res://scenes/player/pickup_item.gd" id="7_qek5x"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_kvlxm"]
-atlas = ExtResource("2_p47bc")
-region = Rect2(0, 192, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_uf5tr"]
-atlas = ExtResource("2_p47bc")
-region = Rect2(48, 192, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_lgqa7"]
-atlas = ExtResource("2_p47bc")
-region = Rect2(0, 288, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_8ydkj"]
-atlas = ExtResource("2_p47bc")
-region = Rect2(48, 288, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_3j4b4"]
-atlas = ExtResource("2_p47bc")
-region = Rect2(0, 336, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_yj68g"]
-atlas = ExtResource("2_p47bc")
-region = Rect2(48, 336, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ioxgp"]
-atlas = ExtResource("2_p47bc")
-region = Rect2(0, 240, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_cnsyf"]
-atlas = ExtResource("2_p47bc")
-region = Rect2(48, 240, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dovo2"]
 atlas = ExtResource("1_8afob")
@@ -107,50 +73,6 @@ region = Rect2(144, 48, 48, 48)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_lvxji"]
 animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_kvlxm")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_uf5tr")
-}],
-"loop": true,
-"name": &"axe_down",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_lgqa7")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_8ydkj")
-}],
-"loop": true,
-"name": &"axe_left",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_3j4b4")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_yj68g")
-}],
-"loop": true,
-"name": &"axe_right",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ioxgp")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_cnsyf")
-}],
-"loop": true,
-"name": &"axe_up",
-"speed": 5.0
-}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_dovo2")
@@ -264,12 +186,11 @@ radius = 18.0
 y_sort_enabled = true
 collision_mask = 6
 script = ExtResource("1_dovo2")
-current_item = NodePath("ItemPivot/AxeItem")
+current_item = NodePath("")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_lvxji")
-animation = &"axe_up"
-frame_progress = 0.26885042
+animation = &"idle_down"
 offset = Vector2(0, -7.5)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -283,8 +204,6 @@ zoom = Vector2(4, 4)
 
 [node name="ItemPivot" type="Node2D" parent="."]
 position = Vector2(0, -7)
-
-[node name="AxeItem" parent="ItemPivot" instance=ExtResource("6_75vfm")]
 
 [node name="UI" type="CanvasLayer" parent="." node_paths=PackedStringArray("debug_label")]
 script = ExtResource("5_p47bc")

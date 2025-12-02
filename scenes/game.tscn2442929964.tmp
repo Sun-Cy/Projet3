@@ -87,11 +87,13 @@ position = Vector2(222, 73)
 [node name="Crate2" parent="Entities" instance=ExtResource("8_gee14")]
 position = Vector2(22, 152)
 
-[node name="ItemSpawner" type="MultiplayerSpawner" parent="Entities"]
+[node name="WorldItems" type="Node2D" parent="Entities"]
+
+[node name="ItemSpawner" type="MultiplayerSpawner" parent="Entities/WorldItems"]
 _spawnable_scenes = PackedStringArray("uid://bhljmkw81rbd8")
 spawn_path = NodePath("..")
 
-[node name="WorldPickup" parent="Entities" instance=ExtResource("9_0tnpc")]
+[node name="WorldPickup" parent="Entities/WorldItems" instance=ExtResource("9_0tnpc")]
 position = Vector2(101, 55)
 item_data = ExtResource("10_vtaks")
 

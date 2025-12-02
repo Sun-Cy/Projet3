@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="ItemData" load_steps=6 format=3 uid="uid://csgq7yfqxf8x3"]
+
+[ext_resource type="PackedScene" uid="uid://c68wql8v35awg" path="res://scenes/item/axe/axe_item.tscn" id="1_q03hb"]
+[ext_resource type="Texture2D" uid="uid://c16wm46gfil7f" path="res://asset/Objects/Basic tools and meterials.png" id="1_uwk4u"]
+[ext_resource type="Script" uid="uid://ck2j7wohm1e53" path="res://scripts/item_data.gd" id="2_vv27d"]
+[ext_resource type="PackedScene" uid="uid://bhljmkw81rbd8" path="res://scenes/item/world_pickup.tscn" id="3_vv27d"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dry6o"]
+atlas = ExtResource("1_uwk4u")
+region = Rect2(17, 0, 15, 16)
+
+[resource]
+script = ExtResource("2_vv27d")
+display_name = "Axe"
+icon = SubResource("AtlasTexture_dry6o")
+held_scene = ExtResource("1_q03hb")
+metadata/_custom_type_script = "uid://ck2j7wohm1e53"
