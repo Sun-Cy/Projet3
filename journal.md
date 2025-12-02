@@ -97,3 +97,8 @@
 - Regler un probleme de desynchronisation de l'arbre et de la crate
 - Demander a GPT un cheat sheet pour le multiplayer
 - Demander a GPT comment funtionais RPC (une fonction pour le multiplayer)
+
+### Mathys 2-12-2025
+- Ajout de la hotbar FONCTIONNELLE
+- Tester antigravity
+- Ajout de la hache dans l'inventaire par défaut
