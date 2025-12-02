@@ -123,6 +123,7 @@ region_enabled = true
 region_rect = Rect2(20, 1, 24, 32)
 
 [node name="HealthComponent" parent="." node_paths=PackedStringArray("animation") instance=ExtResource("2_qd6xs")]
+MAX_HEALTH = 20.0
 animation = NodePath("../AnimationPlayer")
 
 [node name="HitboxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("3_qd6xs")]
