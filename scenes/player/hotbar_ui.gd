@@ -5,6 +5,8 @@ var slots_node: HBoxContainer = null
 var selected_index: int = 0
 var slot_controls: Array = []
 var default_slot_texture: Texture = null
+const WHEEL_UP = 4
+const WHEEL_DOWN = 5
 
 func _get_default_slot_texture() -> Texture:
 	if default_slot_texture:
@@ -104,13 +106,70 @@ func set_slots(slots: Array) -> void:
 	_update_selection()
 
 func set_selected_index(idx: int) -> void:
-	selected_index = idx
+	# Safely set the selected index (wraps around and handles empty slots)
+	if slot_controls.size() == 0:
+		selected_index = 0
+		return
+	var n = slot_controls.size()
+	selected_index = int(idx) % n
+	if selected_index < 0:
+		selected_index += n
 	_update_selection()
 
 func _update_selection() -> void:
+	# Highlight the selected slot in white and de-emphasize others
 	for i in range(slot_controls.size()):
 		var ctrl = slot_controls[i]
 		if i == selected_index:
-			ctrl.modulate = Color(1, 1, 0.7) # highlighted
-		else:
 			ctrl.modulate = Color(1, 1, 1)
+		else:
+			ctrl.modulate = Color(0.8, 0.8, 0.8)
+
+func _unhandled_input(event: InputEvent) -> void:
+	# Number keys 1-9 select slots 0-8 (if present)
+	if event is InputEventKey and event.pressed and not event.echo:
+		# Prefer unicode when available (robust across Godot versions)
+		var ucode := 0
+		if event.has_method("get_unicode"):
+			ucode = event.get_unicode()
+		elif "unicode" in event:
+			ucode = event.unicode
+
+		if ucode >= 49 and ucode <= 57:
+			# '1'..'9' ASCII codes are 49..57
+			set_selected_index(ucode - 49)
+		else:
+			# Fallback: try keycode / scancode methods for different Godot versions
+			var code := -1
+			if event.has_method("get_keycode"):
+				code = event.get_keycode()
+			elif event.has_method("get_scancode"):
+				code = event.get_scancode()
+
+			if code != -1:
+				match code:
+					KEY_1:
+						set_selected_index(0)
+					KEY_2:
+						set_selected_index(1)
+					KEY_3:
+						set_selected_index(2)
+					KEY_4:
+						set_selected_index(3)
+					KEY_5:
+						set_selected_index(4)
+					KEY_6:
+						set_selected_index(5)
+					KEY_7:
+						set_selected_index(6)
+					KEY_8:
+						set_selected_index(7)
+					KEY_9:
+						set_selected_index(8)
+
+	# Mouse wheel up/down to move selection
+	if event is InputEventMouseButton and event.pressed:
+		if event.button_index == WHEEL_UP:
+			set_selected_index(selected_index - 1)
+		elif event.button_index == WHEEL_DOWN:
+			set_selected_index(selected_index + 1)

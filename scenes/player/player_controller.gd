@@ -217,17 +217,15 @@ func _set_selected_slot(index: int) -> void:
 	_equip_selected_item()
 	_update_hotbar()
 
+const DEFAULT_AXE_SCENE: PackedScene = preload("res://scenes/item/AxeItem.tscn")
 
 func _equip_selected_item() -> void:
 	var data: ItemData = inventory_comp.get_slot(selected_slot) if inventory_comp else inventory_slots[selected_slot]
 	if data and data.held_scene:
 		equip_item(data.held_scene)
 	else:
-		# No item in this slot → clear hand
-		if current_item:
-			current_item.on_unequipped()
-			current_item.queue_free()
-			current_item = null
+		# No item in this slot -> equip default axe
+		equip_item(DEFAULT_AXE_SCENE)
 
 
 func _update_hotbar() -> void:
