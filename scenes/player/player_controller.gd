@@ -6,6 +6,11 @@ class_name Player
 @onready var item_pivot: Node2D = $ItemPivot
 @onready var hotbar_ui: Control = $UI/HotbarUI
 
+const DROP_PROTECTION_TIME := 0.75  # seconds during which you cannot re-pick your own drop
+# Dictionary: pickup_node -> remaining_time
+@onready var just_dropped: Dictionary = {}
+signal item_protection_expired
+
 const INVENTORY_SIZE := 10
 var inventory_slots: Array[ItemData] = []
 @onready var inventory_comp: InventoryComponent = $InventoryComponent
@@ -108,9 +113,12 @@ func _unhandled_input(event: InputEvent) -> void:
 			_current_interactable.trigger.rpc(name.to_int())
 
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
 	if !is_multiplayer_authority():
 		return
+	
+	_update_drop_protection(delta)
+	_update_item_aim()
 	
 	_update_item_aim()
 	
@@ -193,6 +201,7 @@ func _drop_selected_item() -> void:
 		var pickup = data.world_pickup_scene.instantiate()
 		get_parent().add_child(pickup)
 		pickup.global_position = global_position
+		_track_dropped_pickup(pickup)
 	remove_item(selected_slot)
 
 
@@ -271,3 +280,24 @@ func set_current_interactable(inter: InteractableComponent) -> void:
 func clear_current_interactable(inter: InteractableComponent) -> void:
 	if _current_interactable == inter:
 		_current_interactable = null
+
+
+func _update_drop_protection(delta: float) -> void:
+	var to_remove: Array = []
+	for pickup in just_dropped.keys():
+		just_dropped[pickup] -= delta
+		if just_dropped[pickup] <= 0.0:
+			to_remove.append(pickup)
+			item_protection_expired.emit()
+	for p in to_remove:
+		just_dropped.erase(p)
+
+
+func _track_dropped_pickup(pickup: Node2D) -> void:
+	just_dropped[pickup] = DROP_PROTECTION_TIME
+	# If the node disappears before the timer ends, clean the dictionary
+	if not pickup.tree_exited.is_connected(_on_dropped_pickup_freed):
+		pickup.tree_exited.connect(_on_dropped_pickup_freed.bind(pickup))
+
+func _on_dropped_pickup_freed(pickup: Node2D) -> void:
+	just_dropped.erase(pickup)

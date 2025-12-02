@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://cfq0k4ct2jisj"]
+[gd_scene load_steps=37 format=3 uid="uid://cfq0k4ct2jisj"]
 
 [ext_resource type="Texture2D" uid="uid://rhoeui6h2arh" path="res://asset/Characters/Basic Charakter Spritesheet.png" id="1_8afob"]
 [ext_resource type="Script" uid="uid://bbsbi62h33ti5" path="res://scenes/player/player_controller.gd" id="1_dovo2"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://bvlt737246qp" path="res://scenes/component/inventory_component.tscn" id="6_0owmy"]
 [ext_resource type="PackedScene" uid="uid://c68wql8v35awg" path="res://scenes/item/AxeItem.tscn" id="6_75vfm"]
 [ext_resource type="Script" uid="uid://jwokliy5acdu" path="res://scenes/player/hotbar_ui.gd" id="7_hotbar"]
+[ext_resource type="Script" uid="uid://28e1scyufryj" path="res://scenes/player/pickup_item.gd" id="7_qek5x"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kvlxm"]
 atlas = ExtResource("2_p47bc")
@@ -320,12 +321,11 @@ layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="TextureRect" type="TextureRect" parent="UI/HotbarUI/Slots"]
-layout_mode = 2
-
-[node name="PickupItem" type="Area2D" parent="."]
+[node name="PickupItem" type="Area2D" parent="." node_paths=PackedStringArray("inventory")]
 collision_layer = 8
 collision_mask = 8
+script = ExtResource("7_qek5x")
+inventory = NodePath("../InventoryComponent")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PickupItem"]
 shape = SubResource("CircleShape2D_p47bc")

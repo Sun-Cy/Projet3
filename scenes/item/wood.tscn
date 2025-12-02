@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://nvaudf08xow7"]
+
+[ext_resource type="Texture2D" uid="uid://c16wm46gfil7f" path="res://asset/Objects/Basic tools and meterials.png" id="1_hdnvv"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ykesc"]
+atlas = ExtResource("1_hdnvv")
+region = Rect2(16, 17, 15, 15)
+
+[node name="Wood" type="Sprite2D"]
+texture = SubResource("AtlasTexture_ykesc")
