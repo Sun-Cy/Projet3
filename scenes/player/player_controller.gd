@@ -38,6 +38,22 @@ func _ready() -> void:
 		inventory_slots.resize(INVENTORY_SIZE)
 		for i in range(INVENTORY_SIZE):
 			inventory_slots[i] = null
+		
+	# Ensure Axe is in slot 0 if empty
+	if inventory_slots[0] == null:
+		var axe_data = ItemData.new()
+		axe_data.display_name = "Axe"
+		axe_data.held_scene = DEFAULT_AXE_SCENE
+		
+		var atlas = AtlasTexture.new()
+		atlas.atlas = preload("res://asset/Objects/Basic_tools_and_meterials.png")
+		atlas.region = Rect2(17, 0, 15, 17)
+		axe_data.icon = atlas
+		
+		if inventory_comp:
+			inventory_comp.set_slot(0, axe_data)
+		else:
+			inventory_slots[0] = axe_data
 
 	_update_hotbar()
 
@@ -224,8 +240,11 @@ func _equip_selected_item() -> void:
 	if data and data.held_scene:
 		equip_item(data.held_scene)
 	else:
-		# No item in this slot -> equip default axe
-		equip_item(DEFAULT_AXE_SCENE)
+		# No item in this slot -> unequip current item
+		if current_item:
+			current_item.on_unequipped()
+			current_item.queue_free()
+			current_item = null
 
 
 func _update_hotbar() -> void:
