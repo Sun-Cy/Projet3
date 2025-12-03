@@ -163,11 +163,11 @@ func _update_item_aim() -> void:
 func equip_item(item_scene: PackedScene) -> void:
 	if current_item:
 		current_item.on_unequipped()
-		current_item.queue_free()
+		rpc("destroy_for_everyone", current_item)
 		current_item = null
 
 	var item := item_scene.instantiate() as HeldItem
-	$ItemPivot.add_child(item)
+	rpc("add_child_for_everyone", item_pivot, item)
 
 	item.set_multiplayer_authority(get_multiplayer_authority())
 	item.on_equipped()
@@ -210,7 +210,7 @@ func _request_drop_selected_item() -> void:
 	rpc_id(server_id,"rpc_drop_item",selected_slot)
 
 
-@rpc("any_peer")
+@rpc("any_peer", "call_local")
 func rpc_drop_item(slot_index: int) -> void:
 	# This method runs on the SERVER's Player instance
 	if !is_multiplayer_authority():
@@ -250,9 +250,6 @@ func _drop_half_item() -> void: # todo
 
 @rpc("any_peer", "call_local")
 func rpc_pickup_item(pickup_path: NodePath) -> void:
-	if !is_multiplayer_authority():
-		return  # only server version of this player should handle
-
 	var pickup := get_tree().get_root().get_node_or_null(pickup_path) as WorldPickup
 	if pickup == null:
 		return  # already taken by someone else or deleted
@@ -353,3 +350,7 @@ func _on_dropped_pickup_freed(pickup: Node2D) -> void:
 @rpc("any_peer", "call_local")
 func destroy_for_everyone(node:Node) -> void:
 	node.queue_free()
+
+@rpc("any_peer", "call_local")
+func add_child_for_everyone(node: Node, child: Node) -> void:
+	node.add_child(child)

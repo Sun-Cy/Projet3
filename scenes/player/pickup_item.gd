@@ -25,6 +25,5 @@ func _on_area_entered(body: Node) -> void:
 
 
 func _request_pickup(pickup: WorldPickup) -> void:
-	var server_id := 1
 	var pickup_path := pickup.get_path()
-	player.rpc_id(server_id, "rpc_pickup_item", pickup_path)
+	player.rpc("rpc_pickup_item", pickup_path)
